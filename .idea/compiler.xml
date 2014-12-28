@@ -23,6 +23,7 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="entrollment" />
+        <module name="eventsbc" />
       </profile>
     </annotationProcessing>
   </component>

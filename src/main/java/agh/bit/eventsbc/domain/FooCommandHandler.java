@@ -3,12 +3,10 @@ package agh.bit.eventsbc.domain;
 import agh.bit.eventsbc.domain.commands.CreateFooCommand;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
-import org.springframework.stereotype.Component;
 
 /**
  * @author Lukasz Raduj <raduj.lukasz@gmail.com>
  */
-@Component
 public class FooCommandHandler {
     private Repository<Foo> fooRepository;
 

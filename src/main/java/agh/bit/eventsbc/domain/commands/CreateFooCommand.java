@@ -11,7 +11,6 @@ public class CreateFooCommand {
     private final FooId id;
     private final String description;
 
-
     public CreateFooCommand(FooId id, String description) {
         this.id = id;
         this.description = description;
