@@ -1,6 +1,6 @@
-package agh.bit.eventsbc.domain.events;
+package agh.bit.eventsbc.domain.event.events;
 
-import agh.bit.eventsbc.domain.valueobject.FooId;
+import agh.bit.eventsbc.domain.event.valueobjects.FooId;
 
 /**
  * @author Lukasz Raduj <raduj.lukasz@gmail.com>

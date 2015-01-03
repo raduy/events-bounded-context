@@ -1,7 +1,7 @@
-package agh.bit.eventsbc.domain;
+package agh.bit.eventsbc.domain.event;
 
-import agh.bit.eventsbc.domain.events.FooCreatedEvent;
-import agh.bit.eventsbc.domain.valueobject.FooId;
+import agh.bit.eventsbc.domain.event.events.FooCreatedEvent;
+import agh.bit.eventsbc.domain.event.valueobjects.FooId;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;

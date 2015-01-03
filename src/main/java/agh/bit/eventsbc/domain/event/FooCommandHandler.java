@@ -1,6 +1,6 @@
-package agh.bit.eventsbc.domain;
+package agh.bit.eventsbc.domain.event;
 
-import agh.bit.eventsbc.domain.commands.CreateFooCommand;
+import agh.bit.eventsbc.domain.event.commands.CreateFooCommand;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
 

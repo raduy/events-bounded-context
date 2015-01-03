@@ -1,6 +1,6 @@
-package agh.bit.eventsbc.domain.commands;
+package agh.bit.eventsbc.domain.event.commands;
 
-import agh.bit.eventsbc.domain.valueobject.FooId;
+import agh.bit.eventsbc.domain.event.valueobjects.FooId;
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 
 /**

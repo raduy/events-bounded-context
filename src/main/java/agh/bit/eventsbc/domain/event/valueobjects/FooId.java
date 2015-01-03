@@ -1,4 +1,4 @@
-package agh.bit.eventsbc.domain.valueobject;
+package agh.bit.eventsbc.domain.event.valueobjects;
 
 /**
  * @author Lukasz Raduj <raduj.lukasz@gmail.com>
