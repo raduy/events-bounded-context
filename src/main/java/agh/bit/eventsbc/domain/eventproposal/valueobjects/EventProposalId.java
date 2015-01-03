@@ -1,4 +1,4 @@
-package agh.bit.eventsbc.domain.eventproposal.valueobject;
+package agh.bit.eventsbc.domain.eventproposal.valueobjects;
 
 import lombok.Value;
 
@@ -7,7 +7,7 @@ import lombok.Value;
  */
 
 @Value(staticConstructor = "of")
-public class TodoListId {
+public class EventProposalId {
 
     private final String id;
 

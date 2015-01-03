@@ -1,7 +1,7 @@
 package agh.bit.eventsbc.domain.eventproposal.commands;
 
-import agh.bit.eventsbc.domain.eventproposal.valueobject.EventDescription;
-import agh.bit.eventsbc.domain.eventproposal.valueobject.EventProposalId;
+import agh.bit.eventsbc.domain.eventproposal.valueobjects.EventDescription;
+import agh.bit.eventsbc.domain.eventproposal.valueobjects.EventProposalId;
 import lombok.Value;
 import lombok.experimental.Accessors;
 

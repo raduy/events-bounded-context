@@ -1,4 +1,4 @@
-package agh.bit.eventsbc.domain.eventproposal.valueobject;
+package agh.bit.eventsbc.domain.eventproposal.valueobjects;
 
 import lombok.Value;
 

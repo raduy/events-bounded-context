@@ -1,10 +1,12 @@
-package agh.bit.eventsbc.domain.eventproposal.aggregates;
+package agh.bit.eventsbc.domain.eventproposal;
 
 import agh.bit.eventsbc.domain.eventproposal.events.EventProposalCreatedEvent;
-import agh.bit.eventsbc.domain.eventproposal.valueobject.EventDescription;
-import agh.bit.eventsbc.domain.eventproposal.valueobject.EventProposalId;
+import agh.bit.eventsbc.domain.eventproposal.valueobjects.EventDescription;
+import agh.bit.eventsbc.domain.eventproposal.valueobjects.EventProposalId;
+import agh.bit.eventsbc.domain.todolist.TodoList;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
+import org.axonframework.eventsourcing.annotation.EventSourcedMember;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 
 /**
@@ -15,6 +17,7 @@ public class EventProposal extends AbstractAnnotatedAggregateRoot {
     @AggregateIdentifier
     private EventProposalId eventProposalId;
     private String name;
+    @EventSourcedMember
     private TodoList todoList;
     private EventDescription description;
 

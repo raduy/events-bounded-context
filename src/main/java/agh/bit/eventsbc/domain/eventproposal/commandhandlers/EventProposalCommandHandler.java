@@ -1,6 +1,6 @@
 package agh.bit.eventsbc.domain.eventproposal.commandhandlers;
 
-import agh.bit.eventsbc.domain.eventproposal.aggregates.EventProposal;
+import agh.bit.eventsbc.domain.eventproposal.EventProposal;
 import agh.bit.eventsbc.domain.eventproposal.commands.CreateEventProposalCommand;
 import agh.bit.eventsbc.domain.eventproposal.factories.EventProposalFactory;
 import org.axonframework.commandhandling.annotation.CommandHandler;

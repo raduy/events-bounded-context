@@ -1,16 +1,16 @@
-package agh.bit.eventsbc.domain.eventproposal.aggregates;
+package agh.bit.eventsbc.domain.eventproposal;
 
 import agh.bit.eventsbc.domain.eventproposal.commandhandlers.EventProposalCommandHandler;
 import agh.bit.eventsbc.domain.eventproposal.commands.CreateEventProposalCommand;
 import agh.bit.eventsbc.domain.eventproposal.events.EventProposalCreatedEvent;
-import agh.bit.eventsbc.domain.eventproposal.valueobject.EventDescription;
-import agh.bit.eventsbc.domain.eventproposal.valueobject.EventProposalId;
+import agh.bit.eventsbc.domain.eventproposal.valueobjects.EventDescription;
+import agh.bit.eventsbc.domain.eventproposal.valueobjects.EventProposalId;
 import org.axonframework.test.FixtureConfiguration;
 import org.axonframework.test.Fixtures;
 import org.junit.Before;
 import org.junit.Test;
 
-public class EventProposalTest  {
+public class EventProposalTest {
 
     private FixtureConfiguration fixture;
 
