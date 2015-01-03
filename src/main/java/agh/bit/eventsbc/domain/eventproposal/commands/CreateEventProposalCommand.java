@@ -1,5 +1,6 @@
 package agh.bit.eventsbc.domain.eventproposal.commands;
 
+import agh.bit.eventsbc.domain.eventproposal.valueobject.EventDescription;
 import agh.bit.eventsbc.domain.eventproposal.valueobject.EventProposalId;
 
 /**
@@ -8,10 +9,12 @@ import agh.bit.eventsbc.domain.eventproposal.valueobject.EventProposalId;
 public class CreateEventProposalCommand {
     private final EventProposalId eventProposalId;
     private final String name;
+    private final EventDescription description;
 
-    public CreateEventProposalCommand(EventProposalId eventProposalId, String name) {
+    public CreateEventProposalCommand(EventProposalId eventProposalId, String name, EventDescription description) {
         this.eventProposalId = eventProposalId;
         this.name = name;
+        this.description = description;
     }
 
     public EventProposalId eventProposalId() {
@@ -21,4 +24,6 @@ public class CreateEventProposalCommand {
     public String name() {
         return name;
     }
+
+    public  EventDescription description() { return description; }
 }

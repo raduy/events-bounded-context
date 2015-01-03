@@ -20,7 +20,7 @@ public class EventProposalCommandHandler {
 
     @CommandHandler
     public void handle(CreateEventProposalCommand command) {
-        final EventProposal eventProposal = EventProposalFactory.create(command.eventProposalId(), command.name());
+        final EventProposal eventProposal = EventProposalFactory.create(command.eventProposalId(), command.name(), command.description());
         eventProposalRepository.add(eventProposal);
     }
 
