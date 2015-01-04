@@ -6,12 +6,7 @@ import agh.bit.eventsbc.domain.event.valueobjects.AttendeeId;
 import agh.bit.eventsbc.domain.event.valueobjects.EventId;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
-import org.axonframework.eventsourcing.annotation.EventSourcedMember;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.LinkedList;
-import java.util.List;
 
 public class Event extends AbstractAnnotatedAggregateRoot {
 
