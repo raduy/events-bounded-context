@@ -29,7 +29,7 @@ public class Event extends AbstractAnnotatedAggregateRoot {
     }
 
     public Event(EventId eventId, String name, int maxAttendeesCount) {
-        apply( new EventCreatedEvent( eventId, name, maxAttendeesCount ));
+        apply( new EventCreatedEvent( eventId, name ));
     }
 
     public void addAttendeeToEvent( AttendeeId attendeeId, String email, String firstname, String lastname ) {
