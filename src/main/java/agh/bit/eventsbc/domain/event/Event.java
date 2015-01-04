@@ -6,6 +6,8 @@ import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 
+import java.util.UUID;
+
 public class Event extends AbstractAnnotatedAggregateRoot {
 
     @AggregateIdentifier
@@ -14,11 +16,11 @@ public class Event extends AbstractAnnotatedAggregateRoot {
     //@TODO dopisać todoList
     //@TODO dopisać EventDescription
 
-    private Event() {
+    private Event( ) {
     }
 
-    public Event(EventId eventId) {
-        this.eventId = eventId;
+    public Event( EventId eventId, String name ) {
+        apply( new EventCreatedEvent( eventId, name ) );
     }
 
     @EventSourcingHandler
