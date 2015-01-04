@@ -1,11 +1,10 @@
 package agh.bit.eventsbc.domain.todolist;
 
 import agh.bit.eventsbc.domain.todolist.entities.TodoItem;
-import agh.bit.eventsbc.domain.todolist.events.TodoItemAssignedToTodoListEvent;
-import agh.bit.eventsbc.domain.todolist.events.TodoItemNotAssignedToTodoList;
-import agh.bit.eventsbc.domain.todolist.events.TodoListCreatedEvent;
+import agh.bit.eventsbc.domain.todolist.events.*;
 import agh.bit.eventsbc.domain.todolist.valueobjects.TodoItemId;
 import agh.bit.eventsbc.domain.todolist.valueobjects.TodoListId;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
@@ -14,6 +13,7 @@ import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Optional;
 
 
 /**
@@ -52,7 +52,7 @@ public class TodoList extends AbstractAnnotatedAggregateRoot {
 
     private boolean alreadyHasTodoItemWith(TodoItemId todoItemId) {
         return todoItems.stream().anyMatch(
-                todoItem -> todoItem.matchesById(todoItemId)
+                todoItem -> todoItem.matchesId(todoItemId)
 
         );
     }
@@ -75,5 +75,21 @@ public class TodoList extends AbstractAnnotatedAggregateRoot {
         todoItems.add(item);
     }
 
+    // todo: consider somehow moving check into TodoItem itself
+    public void markTodoItemDone(TodoItemId todoItemId) {
+        final Optional<TodoItem> todoItemOptional = todoItems.stream()
+                .filter(todoItem -> todoItem.matchesId(todoItemId))
+                .findFirst();
 
+        final TodoItem todoItem = todoItemOptional.orElseThrow(
+                () -> new IllegalArgumentException("TodoItem with given id not present")
+        );
+
+        if (todoItem.markedDone()) {
+            apply(new TodoItemNotMarkedDoneEvent(todoListId, todoItemId));
+            return;
+        }
+
+        apply(new TodoItemMarkedDoneEvent(todoListId, todoItemId));
+    }
 }

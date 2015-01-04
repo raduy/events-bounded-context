@@ -3,6 +3,7 @@ package agh.bit.eventsbc.domain.todolist.commandhandlers;
 import agh.bit.eventsbc.domain.todolist.TodoList;
 import agh.bit.eventsbc.domain.todolist.commands.AssignTodoItemToTodoListCommand;
 import agh.bit.eventsbc.domain.todolist.commands.CreateTodoListCommand;
+import agh.bit.eventsbc.domain.todolist.commands.MarkTodoItemDoneCommand;
 import agh.bit.eventsbc.domain.todolist.factories.TodoListFactory;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
@@ -34,6 +35,12 @@ public class TodoListCommandHandler {
                 command.content(),
                 command.createdAt()
         );
+    }
+
+    @CommandHandler
+    public void handle(MarkTodoItemDoneCommand command) {
+        final TodoList todoList = todoListRepository.load(command.todoListId());
+        todoList.markTodoItemDone(command.todoItemId());
     }
 
 

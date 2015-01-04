@@ -1,6 +1,6 @@
 package agh.bit.eventsbc.domain.todolist.entities;
 
-import agh.bit.eventsbc.domain.todolist.events.TodoItemMarkedDone;
+import agh.bit.eventsbc.domain.todolist.events.TodoItemMarkedDoneEvent;
 import agh.bit.eventsbc.domain.todolist.valueobjects.TodoItemId;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
@@ -27,8 +27,8 @@ public class TodoItem extends AbstractAnnotatedEntity {
     }
 
     @EventSourcingHandler
-    public void on(TodoItemMarkedDone event) {
-        if (!id.equals(event.todoItemId())) {
+    public void on(TodoItemMarkedDoneEvent event) {
+        if (!matchesId(event.todoItemId())) {
             return;
         }
 
@@ -36,14 +36,14 @@ public class TodoItem extends AbstractAnnotatedEntity {
     }
 
     private void markDone() {
-        this.done = false;
+        this.done = true;
     }
 
-    public boolean isDone() {
+    public boolean markedDone() {
         return done;
     }
 
-    public boolean matchesById(TodoItemId anotherId) {
+    public boolean matchesId(TodoItemId anotherId) {
         return id.equals(anotherId);
     }
 
@@ -63,4 +63,5 @@ public class TodoItem extends AbstractAnnotatedEntity {
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
     }
+
 }

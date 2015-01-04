@@ -1,9 +1,9 @@
-package agh.bit.eventsbc.domain.todolist.commands;
+package agh.bit.eventsbc.domain.todolist.events;
 
+import agh.bit.eventsbc.domain.todolist.valueobjects.TodoItemId;
 import agh.bit.eventsbc.domain.todolist.valueobjects.TodoListId;
 import lombok.Value;
 import lombok.experimental.Accessors;
-import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 
 /**
  * Created by novy on 04.01.15.
@@ -11,9 +11,9 @@ import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 
 @Value
 @Accessors(fluent = true)
-public class CreateTodoListCommand {
+public class TodoItemNotMarkedDoneEvent {
 
-    @TargetAggregateIdentifier
     private final TodoListId todoListId;
+    private final TodoItemId todoItemId;
 
 }

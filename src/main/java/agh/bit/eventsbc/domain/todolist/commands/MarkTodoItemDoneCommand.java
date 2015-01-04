@@ -1,5 +1,6 @@
 package agh.bit.eventsbc.domain.todolist.commands;
 
+import agh.bit.eventsbc.domain.todolist.valueobjects.TodoItemId;
 import agh.bit.eventsbc.domain.todolist.valueobjects.TodoListId;
 import lombok.Value;
 import lombok.experimental.Accessors;
@@ -11,9 +12,10 @@ import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 
 @Value
 @Accessors(fluent = true)
-public class CreateTodoListCommand {
+public class MarkTodoItemDoneCommand {
 
     @TargetAggregateIdentifier
     private final TodoListId todoListId;
+    private final TodoItemId todoItemId;
 
 }

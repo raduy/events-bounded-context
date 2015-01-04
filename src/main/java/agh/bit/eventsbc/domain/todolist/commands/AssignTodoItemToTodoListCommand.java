@@ -16,8 +16,8 @@ import java.time.LocalDate;
 @Accessors(fluent = true)
 public class AssignTodoItemToTodoListCommand {
 
-    private final TodoListId todoListId;
     @TargetAggregateIdentifier
+    private final TodoListId todoListId;
     private final TodoItemId todoItemId;
     private final String title;
     private final String content;
