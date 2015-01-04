@@ -9,7 +9,6 @@ import agh.bit.eventsbc.domain.todolist.TodoList;
 import agh.bit.eventsbc.domain.todolist.valueobjects.TodoListId;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
-import org.axonframework.eventsourcing.annotation.EventSourcedMember;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 
 /**
@@ -20,8 +19,7 @@ public class EventProposal extends AbstractAnnotatedAggregateRoot {
     @AggregateIdentifier
     private EventProposalId eventProposalId;
     private String name;
-    @EventSourcedMember
-    private TodoList todoList;
+    private TodoListId todoListId;
     private EventDescription description;
 
     private EventProposal() {}
@@ -56,10 +54,10 @@ public class EventProposal extends AbstractAnnotatedAggregateRoot {
 
     @EventSourcingHandler
     public void on(TodoListAssignedToEventProposalEvent event) {
-        todoList = new TodoList(event.todoListId());
+        todoListId = event.todoListId();
     }
 
     private boolean alreadyHasTodoListAssigned() {
-        return todoList != null;
+        return todoListId != null;
     }
 }
