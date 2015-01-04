@@ -31,10 +31,10 @@ public class EventTest {
         fixture
                 .given( )
                 .when(
-                        new CreateEventCommand( EventId.valueOf( 1L ), "Evt desc" )
+                        new CreateEventCommand( EventId.valueOf( 1L ), "Evt desc", 10 )
                 )
                 .expectEvents(
-                        new EventCreatedEvent( EventId.valueOf( 1L ), "Evt desc" )
+                        new EventCreatedEvent( EventId.valueOf( 1L ), "Evt desc", 10)
                 );
     }
 

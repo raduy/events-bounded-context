@@ -14,7 +14,7 @@ public class EventCommandHandler {
 
     @CommandHandler
     public void handleCreateEventCommand( CreateEventCommand createEventCommand ) {
-        Event event = EventFactory.create( createEventCommand.eventId, createEventCommand.name );
+        Event event = EventFactory.create( createEventCommand.eventId, createEventCommand.name, createEventCommand.maxAttendeesCount );
         eventRepository.add( event );
     }
 

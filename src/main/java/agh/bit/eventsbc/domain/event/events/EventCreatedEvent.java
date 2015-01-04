@@ -6,12 +6,11 @@ public class EventCreatedEvent {
 
     public final EventId eventId;
     public final String name;
-    public final int maxAttendees;
+    public final int maxAttendeesCount;
 
-    public EventCreatedEvent(EventId eventId, String name, int maxAttendees) {
+    public EventCreatedEvent(EventId eventId, String name, int maxAttendeesCount) {
         this.eventId = eventId;
         this.name = name;
-        this.maxAttendees = maxAttendees;
+        this.maxAttendeesCount = maxAttendeesCount;
     }
-
 }
