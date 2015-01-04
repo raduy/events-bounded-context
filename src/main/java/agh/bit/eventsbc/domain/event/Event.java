@@ -9,6 +9,7 @@ import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcedMember;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,7 +24,8 @@ public class Event extends AbstractAnnotatedAggregateRoot {
     //@TODO dopisać todoList
     //@TODO dopisać EventDescription
     private int maxAttendeesCount;
-
+    //@TODO czy boolean/enum jest tutaj niezbedny?
+    private boolean isGatheringFinished = false;
 
     private Event() {
     }
@@ -32,7 +34,16 @@ public class Event extends AbstractAnnotatedAggregateRoot {
         apply( new EventCreatedEvent( eventId, name, maxAttendeesCount ));
     }
 
+    public List<Attendee> getAttendees() {
+        return Collections.unmodifiableList( attendees );
+    }
+
     public void addAttendeeToEvent( AttendeeId attendeeId, String email, String firstname, String lastname ) {
+
+        if(isGatheringFinished) {
+            apply( new AttendeeGatheringAlreadyClosedEvent( eventId ) );
+            return;
+        }
 
         if( isAttendeeAlreadySignedForEvent( attendeeId ) ) {
             apply( new AttendeeAlreadySignedForEvent( attendeeId, this.eventId ));
@@ -53,6 +64,14 @@ public class Event extends AbstractAnnotatedAggregateRoot {
 
     }
 
+    public void finishAttendeeGathering( ) {
+        if(isGatheringFinished) {
+            apply( new AttendeeGatheringAlreadyClosedEvent( eventId ) );
+            return;
+        }
+        apply( new AttendeeListClosedEvent( eventId ));
+    }
+
     private boolean isAttendeeAlreadySignedForEvent( AttendeeId attendeeId ) {
 
         return attendees.stream().filter( attendee -> attendee.getId().equals( attendeeId ))
@@ -60,16 +79,21 @@ public class Event extends AbstractAnnotatedAggregateRoot {
                 .isPresent();
     }
 
-
     @EventSourcingHandler
-    public void onEventCreatedEvent( EventCreatedEvent eventCreatedEvent ) {
-        this.eventId = eventCreatedEvent.eventId;
-        this.name = eventCreatedEvent.name;
+    public void onEventCreatedEvent( EventCreatedEvent event ) {
+        this.eventId = event.eventId;
+        this.name = event.name;
+        this.maxAttendeesCount = event.maxAttendeesCount;
     }
 
     @EventSourcingHandler
     public void onAttendeeAddedEvent( AttendeeAddedEvent event ) {
         Attendee attendee = AttendeeFactory.createAttendee( event.attendeeId, event.email, event.firstname, event.lastname);
         attendees.add( attendee );
+    }
+
+    @EventSourcingHandler
+    public void onAttendeeListClosedEvent( AttendeeListClosedEvent event ) {
+        this.isGatheringFinished = true;
     }
 }

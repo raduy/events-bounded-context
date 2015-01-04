@@ -2,7 +2,6 @@ package agh.bit.eventsbc.domain.event.factories;
 
 import agh.bit.eventsbc.domain.event.Attendee;
 import agh.bit.eventsbc.domain.event.valueobjects.AttendeeId;
-import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 import java.util.regex.Pattern;

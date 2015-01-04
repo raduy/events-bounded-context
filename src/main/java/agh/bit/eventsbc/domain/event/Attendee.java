@@ -1,9 +1,7 @@
 package agh.bit.eventsbc.domain.event;
 
 import agh.bit.eventsbc.domain.event.valueobjects.AttendeeId;
-import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
-import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 
 public class Attendee extends AbstractAnnotatedEntity {
 
