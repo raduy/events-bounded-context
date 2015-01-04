@@ -5,7 +5,7 @@ import agh.bit.eventsbc.domain.event.valueobjects.EventId;
 
 public class EventFactory {
 
-    public static Event create( EventId eventId, String name ) {
-        return new Event( eventId, name );
+    public static Event create( EventId eventId, String name , int maxAttendeesCount) {
+        return new Event( eventId, name, maxAttendeesCount );
     }
 }

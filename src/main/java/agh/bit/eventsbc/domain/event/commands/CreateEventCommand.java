@@ -7,9 +7,11 @@ public class CreateEventCommand {
     @TargetAggregateIdentifier
     public final EventId eventId;
     public final String name;
+    public final int maxAttendeesCount;
 
-    public CreateEventCommand( EventId eventId, String name ) {
+    public CreateEventCommand( EventId eventId, String name, int maxAttendeesCount ) {
         this.eventId = eventId;
         this.name = name;
+        this.maxAttendeesCount = maxAttendeesCount;
     }
 }
