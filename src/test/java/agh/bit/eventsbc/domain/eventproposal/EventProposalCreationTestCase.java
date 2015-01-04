@@ -1,26 +1,15 @@
 package agh.bit.eventsbc.domain.eventproposal;
 
-import agh.bit.eventsbc.domain.eventproposal.commandhandlers.EventProposalCommandHandler;
 import agh.bit.eventsbc.domain.eventproposal.commands.CreateEventProposalCommand;
 import agh.bit.eventsbc.domain.eventproposal.events.EventProposalCreatedEvent;
 import agh.bit.eventsbc.domain.eventproposal.valueobjects.EventDescription;
 import agh.bit.eventsbc.domain.eventproposal.valueobjects.EventProposalId;
-import org.axonframework.test.FixtureConfiguration;
-import org.axonframework.test.Fixtures;
-import org.junit.Before;
 import org.junit.Test;
 
-public class EventProposalTest {
-
-    private FixtureConfiguration fixture;
-
-    @Before
-    public void setUp() throws Exception {
-        fixture = Fixtures.newGivenWhenThenFixture(EventProposal.class);
-        EventProposalCommandHandler commandHandler = new EventProposalCommandHandler();
-        commandHandler.setEventProposalRepository(fixture.getRepository());
-        fixture.registerAnnotatedCommandHandler(commandHandler);
-    }
+/**
+ * Created by novy on 04.01.15.
+ */
+public class EventProposalCreationTestCase extends EventProposalPreconfiguredTestCase {
 
     @Test
     public void createEventProposalCommandShouldCreateNewEventProposal() throws Exception {
