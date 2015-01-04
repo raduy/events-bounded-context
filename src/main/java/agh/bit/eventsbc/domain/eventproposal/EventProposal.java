@@ -5,7 +5,6 @@ import agh.bit.eventsbc.domain.eventproposal.events.EventProposalCreatedEvent;
 import agh.bit.eventsbc.domain.eventproposal.events.TodoListAssignedToEventProposalEvent;
 import agh.bit.eventsbc.domain.eventproposal.valueobjects.EventDescription;
 import agh.bit.eventsbc.domain.eventproposal.valueobjects.EventProposalId;
-import agh.bit.eventsbc.domain.todolist.TodoList;
 import agh.bit.eventsbc.domain.todolist.valueobjects.TodoListId;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
@@ -22,7 +21,8 @@ public class EventProposal extends AbstractAnnotatedAggregateRoot {
     private TodoListId todoListId;
     private EventDescription description;
 
-    private EventProposal() {}
+    private EventProposal() {
+    }
 
     public EventProposal(EventProposalId eventProposalId, String name, EventDescription description) {
         apply(new EventProposalCreatedEvent(eventProposalId, name, description));

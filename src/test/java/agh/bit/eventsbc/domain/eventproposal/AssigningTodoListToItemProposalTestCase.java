@@ -13,7 +13,7 @@ import org.junit.Test;
  * Created by novy on 04.01.15.
  */
 public class AssigningTodoListToItemProposalTestCase
-        extends EventProposalPreconfiguredTestCase{
+        extends EventProposalPreconfiguredTestCase {
 
     @Test
     public void assignTodoListToEventProposalCommandShouldAssignTodoListToEventProposal() throws Exception {
