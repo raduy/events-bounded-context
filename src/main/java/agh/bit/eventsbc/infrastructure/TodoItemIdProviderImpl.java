@@ -2,6 +2,7 @@ package agh.bit.eventsbc.infrastructure;
 
 import agh.bit.eventsbc.domain.eventproposal.factories.TodoItemIdProvider;
 import agh.bit.eventsbc.domain.todolist.valueobjects.TodoItemId;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 
 import java.util.List;
@@ -23,9 +24,7 @@ public class TodoItemIdProviderImpl implements TodoItemIdProvider {
 
     @Override
     public List<TodoItemId> nextIdBatch(int batchSize) {
-        if (batchSize < 0) {
-            throw new IllegalArgumentException(ERROR_MESSAGE);
-        }
+        Preconditions.checkArgument(batchSize >= 0, ERROR_MESSAGE);
 
         return IntStream
                 .range(0, batchSize)
