@@ -61,7 +61,6 @@ public class Event extends AbstractAnnotatedAggregateRoot {
         }
 
         apply( new AttendeeAddedEvent( this.eventId, attendeeId, email, firstname, lastname ));
-
     }
 
     public void finishAttendeeGathering( ) {
@@ -80,20 +79,20 @@ public class Event extends AbstractAnnotatedAggregateRoot {
     }
 
     @EventSourcingHandler
-    public void onEventCreatedEvent( EventCreatedEvent event ) {
+    public void on( EventCreatedEvent event ) {
         this.eventId = event.eventId;
         this.name = event.name;
         this.maxAttendeesCount = event.maxAttendeesCount;
     }
 
     @EventSourcingHandler
-    public void onAttendeeAddedEvent( AttendeeAddedEvent event ) {
-        Attendee attendee = AttendeeFactory.createAttendee( event.attendeeId, event.email, event.firstname, event.lastname);
+    public void on( AttendeeAddedEvent event ) {
+        Attendee attendee = AttendeeFactory.create(event.attendeeId, event.email, event.firstname, event.lastname);
         attendees.add( attendee );
     }
 
     @EventSourcingHandler
-    public void onAttendeeListClosedEvent( AttendeeListClosedEvent event ) {
+    public void on( AttendeeListClosedEvent event ) {
         this.isGatheringFinished = true;
     }
 }

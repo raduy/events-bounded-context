@@ -13,7 +13,7 @@ public class AttendeeFactory {
             "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                     + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
-    public static Attendee createAttendee( AttendeeId attendeeId, String email, String firstname, String lastname ) {
+    public static Attendee create(AttendeeId attendeeId, String email, String firstname, String lastname) {
 
         return new Attendee( attendeeId, email, firstname, lastname );
     }
@@ -22,7 +22,7 @@ public class AttendeeFactory {
 
         AttendeeId attendeeId = generateAttendeeId();
 
-        return createAttendee( attendeeId, email, firstname, lastname );
+        return create(attendeeId, email, firstname, lastname);
     }
 
     private static AttendeeId generateAttendeeId() {

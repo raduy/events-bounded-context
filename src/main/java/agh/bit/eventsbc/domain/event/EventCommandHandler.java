@@ -15,7 +15,7 @@ public class EventCommandHandler {
     private Repository<Event> eventRepository;
 
     @CommandHandler
-    public void handleCreateEventCommand( CreateEventCommand command ) {
+    public void handle( CreateEventCommand command ) {
         Event event = EventFactory.create(
                 command.eventId,
                 command.name,
@@ -24,7 +24,7 @@ public class EventCommandHandler {
     }
 
     @CommandHandler
-    public void handleSignForEventCommand( SignForEventCommand command ) {
+    public void handle( SignForEventCommand command ) {
         Event event = eventRepository.load( command.eventId );
         event.addAttendeeToEvent(
                 command.attendeeId,
@@ -34,7 +34,7 @@ public class EventCommandHandler {
     }
 
     @CommandHandler
-    public void handleFinishAttendeeGatheringCommand( FinishAttendeeGatheringCommand command ) {
+    public void handle( FinishAttendeeGatheringCommand command ) {
         Event event = eventRepository.load( command.eventId );
         event.finishAttendeeGathering( );
     }
