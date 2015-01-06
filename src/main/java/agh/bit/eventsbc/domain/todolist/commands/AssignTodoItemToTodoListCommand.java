@@ -19,8 +19,7 @@ public class AssignTodoItemToTodoListCommand {
     @TargetAggregateIdentifier
     private final TodoListId todoListId;
     private final TodoItemId todoItemId;
-    private final String title;
-    private final String content;
+    private final String description;
     private final LocalDate createdAt;
 
 }

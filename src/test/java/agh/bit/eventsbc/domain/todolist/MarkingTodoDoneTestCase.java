@@ -18,7 +18,6 @@ public class MarkingTodoDoneTestCase extends TodoListPreconfiguredTestCase {
 
     private final TodoListId todoListId = TodoListId.of("id");
     private final TodoItemId todoItemId = TodoItemId.of("123");
-    private final String itemTitle = "itemTitle";
     private final String itemContent = "itemContent";
     private final LocalDate itemCreationDate = LocalDate.now();
 
@@ -31,7 +30,7 @@ public class MarkingTodoDoneTestCase extends TodoListPreconfiguredTestCase {
                         ),
                         new TodoItemAssignedToTodoListEvent(
                                 todoListId, todoItemId,
-                                itemTitle, itemContent, itemCreationDate
+                                itemContent, itemCreationDate
                         )
                 )
                 .when(
@@ -55,7 +54,7 @@ public class MarkingTodoDoneTestCase extends TodoListPreconfiguredTestCase {
                         ),
                         new TodoItemAssignedToTodoListEvent(
                                 todoListId, todoItemId,
-                                itemTitle, itemContent, itemCreationDate
+                                itemContent, itemCreationDate
                         ),
                         new TodoItemMarkedDoneEvent(
                                 todoListId, todoItemId

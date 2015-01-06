@@ -22,7 +22,6 @@ public class AssigningTodoItemToTodoListTestCase
     @Test
     public void assignTodoItemToTodoListShouldCreateNewTodoItem() throws Exception {
         final TodoItemId todoItemId = TodoItemId.of("123");
-        final String title = "title";
         final String content = "content";
         final LocalDate now = LocalDate.now();
 
@@ -35,13 +34,13 @@ public class AssigningTodoItemToTodoListTestCase
                 .when(
                         new AssignTodoItemToTodoListCommand(
                                 todoListId, todoItemId,
-                                title, content, now
+                                content, now
                         )
                 )
                 .expectEvents(
                         new TodoItemAssignedToTodoListEvent(
                                 todoListId, todoItemId,
-                                title, content, now
+                                content, now
                         )
                 );
 
@@ -50,7 +49,6 @@ public class AssigningTodoItemToTodoListTestCase
     @Test
     public void assigningTodoItemWithSameIdTwiceShouldFail() throws Exception {
         final TodoItemId todoItemId = TodoItemId.of("123");
-        final String title = "title";
         final String content = "content";
         final LocalDate now = LocalDate.now();
 
@@ -61,13 +59,13 @@ public class AssigningTodoItemToTodoListTestCase
                         ),
                         new TodoItemAssignedToTodoListEvent(
                                 todoListId, todoItemId,
-                                title, content, now
+                                 content, now
                         )
                 )
                 .when(
                         new AssignTodoItemToTodoListCommand(
                                 todoListId, todoItemId,
-                                "different title", "different content",
+                                "different content",
                                 LocalDate.now()
                         )
                 )

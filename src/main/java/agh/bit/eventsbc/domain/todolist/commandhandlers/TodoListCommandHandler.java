@@ -31,7 +31,6 @@ public class TodoListCommandHandler {
         final TodoList todoList = todoListRepository.load(command.todoListId());
         todoList.assignTodoItem(
                 command.todoItemId(),
-                command.title(),
                 command.content(),
                 command.createdAt()
         );

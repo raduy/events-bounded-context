@@ -13,15 +13,13 @@ import java.time.LocalDate;
 public class TodoItem extends AbstractAnnotatedEntity {
 
     private final TodoItemId id;
-    private String title;
-    private String content;
+    private String description;
     private boolean done;
     private LocalDate createdAt;
 
-    public TodoItem(TodoItemId todoItemId, String title, String content, LocalDate createdAt) {
+    public TodoItem(TodoItemId todoItemId, String description, LocalDate createdAt) {
         this.id = todoItemId;
-        this.title = title;
-        this.content = content;
+        this.description = description;
         this.done = false;
         this.createdAt = createdAt;
     }

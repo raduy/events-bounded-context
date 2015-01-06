@@ -17,7 +17,6 @@ public class TodoItemAssignedToTodoListEvent {
 
     private final TodoListId todoListId;
     private final TodoItemId todoItemId;
-    private final String title;
     private final String content;
     private final LocalDate createdAt;
 

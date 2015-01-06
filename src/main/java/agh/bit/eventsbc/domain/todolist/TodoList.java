@@ -1,5 +1,6 @@
 package agh.bit.eventsbc.domain.todolist;
 
+import agh.bit.eventsbc.domain.eventproposal.factories.TodoItemFactory;
 import agh.bit.eventsbc.domain.todolist.entities.TodoItem;
 import agh.bit.eventsbc.domain.todolist.events.*;
 import agh.bit.eventsbc.domain.todolist.valueobjects.TodoItemId;
@@ -34,8 +35,7 @@ public class TodoList extends AbstractAnnotatedAggregateRoot {
         apply(new TodoListCreatedEvent(todoListId));
     }
 
-    public void assignTodoItem(TodoItemId todoItemId, String title,
-                               String content, LocalDate creationDate) {
+    public void assignTodoItem(TodoItemId todoItemId, String content, LocalDate creationDate) {
 
         if (alreadyHasTodoItemWith(todoItemId)) {
             apply(new TodoItemNotAssignedToTodoList(
@@ -46,7 +46,7 @@ public class TodoList extends AbstractAnnotatedAggregateRoot {
         }
 
         apply(new TodoItemAssignedToTodoListEvent(
-                        todoListId, todoItemId, title, content, creationDate)
+                        todoListId, todoItemId, content, creationDate)
         );
     }
 
@@ -65,9 +65,8 @@ public class TodoList extends AbstractAnnotatedAggregateRoot {
 
     @EventSourcingHandler
     public void on(TodoItemAssignedToTodoListEvent event) {
-        final TodoItem item = new TodoItem(
+        final TodoItem item = TodoItemFactory.create(
                 event.todoItemId(),
-                event.title(),
                 event.content(),
                 event.createdAt()
         );
