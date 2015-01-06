@@ -6,6 +6,7 @@ import lombok.experimental.Accessors;
 
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by novy on 05.01.15.
@@ -16,6 +17,6 @@ import java.util.LinkedList;
 public class TodoListTemplateCreatedEvent {
 
     private final TodoListTemplateId id;
-    private final Collection<String> todoItemDescriptions;
+    private final List<String> todoItemDescriptions;
 
 }

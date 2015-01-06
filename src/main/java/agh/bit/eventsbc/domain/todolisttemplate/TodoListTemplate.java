@@ -8,7 +8,6 @@ import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -22,7 +21,7 @@ public class TodoListTemplate extends AbstractAnnotatedAggregateRoot {
     @AggregateIdentifier
     private TodoListTemplateId id;
 
-    private Collection<TodoItemTemplate> templates = Lists.newArrayList();
+    private List<TodoItemTemplate> todoItemTemplates = Lists.newArrayList();
 
     private TodoListTemplate() {}
 
@@ -33,17 +32,28 @@ public class TodoListTemplate extends AbstractAnnotatedAggregateRoot {
     @EventSourcingHandler
     public void on(TodoListTemplateCreatedEvent event) {
         this.id = event.id();
-        this.templates = templatesFrom(event.todoItemDescriptions());
+        this.todoItemTemplates = itemsFrom(event.todoItemDescriptions());
     }
 
-    private Collection<TodoItemTemplate> templatesFrom(Collection<String> descriptions) {
+    // todo: at this point, those methods below create unnecessary complexity, consider just using collection of strings
+    private List<TodoItemTemplate> itemsFrom(List<String> descriptions) {
         return descriptions.stream()
                 .map(TodoItemTemplate::new)
                 .collect(Collectors.toList());
 
     }
 
+    public List<String> todoItemDescriptions() {
+        return todoItemTemplates.stream()
+                .map(TodoItemTemplate::description)
+                .collect(Collectors.toList());
+    }
+
+    public TodoListTemplateId id() {
+        return id;
+    }
+
     public Collection<TodoItemTemplate> todoItemsTemplate() {
-        return Collections.unmodifiableCollection(templates);
+        return Collections.unmodifiableCollection(todoItemTemplates);
     }
 }

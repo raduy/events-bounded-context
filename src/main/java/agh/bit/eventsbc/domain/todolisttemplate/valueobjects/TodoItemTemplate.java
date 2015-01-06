@@ -7,11 +7,11 @@ import lombok.experimental.Accessors;
  * Created by novy on 05.01.15.
  */
 
-// todo: for now, just content
+// todo: for now, just description
 
 @Value
 @Accessors(fluent = true)
 public class TodoItemTemplate {
 
-    private final String content;
+    private final String description;
 }

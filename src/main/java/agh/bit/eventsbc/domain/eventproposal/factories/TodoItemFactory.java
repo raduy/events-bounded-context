@@ -15,14 +15,4 @@ public class TodoItemFactory {
         return new TodoItem(id, content, createdAt);
     }
 
-    public static TodoItem create(String content, LocalDate createdAt) {
-        return TodoItemFactory.create(nextId(), content, createdAt);
-    }
-
-    public static TodoItemId nextId() {
-        final UUID uuid = UUID.randomUUID();
-        return TodoItemId.of(uuid.toString());
-    }
-
-
 }

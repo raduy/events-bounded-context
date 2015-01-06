@@ -6,7 +6,6 @@ import agh.bit.eventsbc.domain.todolist.TodoList;
 import agh.bit.eventsbc.domain.todolist.commandhandlers.TodoListCommandHandler;
 import agh.bit.eventsbc.domain.todolisttemplate.TodoListTemplate;
 import agh.bit.eventsbc.domain.todolisttemplate.commandhandlers.TodoListTemplateCommandHandler;
-import org.axonframework.eventsourcing.EventSourcedAggregateRoot;
 import org.axonframework.test.FixtureConfiguration;
 import org.axonframework.test.Fixtures;
 

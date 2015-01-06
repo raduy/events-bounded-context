@@ -1,11 +1,12 @@
 package agh.bit.eventsbc.domain.todolist;
 
 import agh.bit.eventsbc.domain.eventproposal.factories.TodoItemFactory;
+import agh.bit.eventsbc.domain.eventproposal.factories.TodoItemIdProvider;
 import agh.bit.eventsbc.domain.todolist.entities.TodoItem;
 import agh.bit.eventsbc.domain.todolist.events.*;
 import agh.bit.eventsbc.domain.todolist.valueobjects.TodoItemId;
 import agh.bit.eventsbc.domain.todolist.valueobjects.TodoListId;
-import com.google.common.base.Preconditions;
+import agh.bit.eventsbc.domain.todolisttemplate.TodoListTemplate;
 import com.google.common.collect.Lists;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
@@ -14,7 +15,10 @@ import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 
 /**
@@ -23,30 +27,30 @@ import java.util.Optional;
 public class TodoList extends AbstractAnnotatedAggregateRoot {
 
     @AggregateIdentifier
-    private TodoListId todoListId;
+    private TodoListId id;
 
     @EventSourcedMember
-    private Collection<TodoItem> todoItems = Lists.newArrayList();
+    private List<TodoItem> todoItems = Lists.newArrayList();
 
     private TodoList() {
     }
 
-    public TodoList(TodoListId todoListId) {
-        apply(new TodoListCreatedEvent(todoListId));
+    public TodoList(TodoListId id) {
+        apply(new TodoListCreatedEvent(id));
     }
 
     public void assignTodoItem(TodoItemId todoItemId, String content, LocalDate creationDate) {
 
         if (alreadyHasTodoItemWith(todoItemId)) {
             apply(new TodoItemNotAssignedToTodoList(
-                            todoListId, todoItemId)
+                            id, todoItemId)
             );
 
             return;
         }
 
         apply(new TodoItemAssignedToTodoListEvent(
-                        todoListId, todoItemId, content, creationDate)
+                        id, todoItemId, content, creationDate)
         );
     }
 
@@ -60,14 +64,14 @@ public class TodoList extends AbstractAnnotatedAggregateRoot {
 
     @EventSourcingHandler
     public void on(TodoListCreatedEvent event) {
-        this.todoListId = event.todoListId();
+        this.id = event.todoListId();
     }
 
     @EventSourcingHandler
     public void on(TodoItemAssignedToTodoListEvent event) {
         final TodoItem item = TodoItemFactory.create(
                 event.todoItemId(),
-                event.content(),
+                event.description(),
                 event.createdAt()
         );
 
@@ -85,10 +89,53 @@ public class TodoList extends AbstractAnnotatedAggregateRoot {
         );
 
         if (todoItem.markedDone()) {
-            apply(new TodoItemNotMarkedDoneEvent(todoListId, todoItemId));
+            apply(new TodoItemNotMarkedDoneEvent(id, todoItemId));
             return;
         }
 
-        apply(new TodoItemMarkedDoneEvent(todoListId, todoItemId));
+        apply(new TodoItemMarkedDoneEvent(id, todoItemId));
+    }
+
+    // todo: consider doing it without this messy idProvider closure
+    public void fulfillWith(TodoListTemplate todoListTemplate, LocalDate creationDate, TodoItemIdProvider provider) {
+        if (alreadyHasAnyTodoItem()) {
+            apply(new TodoListNotFulfilledWithTemplateEvent(
+                            id,
+                            todoListTemplate.id()
+                    )
+            );
+
+            return;
+        }
+
+        final List<String> todoItemDescriptions = todoListTemplate.todoItemDescriptions();
+
+        apply(new TodoListFulfilledWithTemplateEvent(
+                        id,
+                        todoListTemplate.id(),
+                        provider.nextIdBatch(todoItemDescriptions.size()),
+                        todoItemDescriptions,
+                        creationDate
+                )
+        );
+    }
+
+    @EventSourcingHandler
+    public void on(TodoListFulfilledWithTemplateEvent event) {
+        todoItems.addAll(
+            fromDescriptions(event.todoItemIds(), event.todoItemDescriptions(), event.fulfilledAt())
+        );
+    }
+
+    private Collection<TodoItem> fromDescriptions(List<TodoItemId> ids, List<String> descriptions,
+                                                  LocalDate creationDate) {
+        return IntStream
+                .range(0, ids.size())
+                .mapToObj(i -> TodoItemFactory.create(ids.get(i), descriptions.get(i), creationDate))
+                .collect(Collectors.toList());
+    }
+
+    private boolean alreadyHasAnyTodoItem() {
+        return !todoItems.isEmpty();
     }
 }

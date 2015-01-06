@@ -2,6 +2,7 @@ package agh.bit.eventsbc.domain.todolist.entities;
 
 import agh.bit.eventsbc.domain.todolist.events.TodoItemMarkedDoneEvent;
 import agh.bit.eventsbc.domain.todolist.valueobjects.TodoItemId;
+import lombok.ToString;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 /**
  * Created by novy on 03.01.15.
  */
+@ToString
 public class TodoItem extends AbstractAnnotatedEntity {
 
     private final TodoItemId id;
