@@ -1,20 +1,18 @@
-package agh.bit.eventsbc.domain.eventproposal.commands;
+package agh.bit.eventsbc.domain.eventproposal.events;
 
 import agh.bit.eventsbc.domain.eventproposal.valueobjects.EventProposalId;
 import agh.bit.eventsbc.domain.eventproposal.valueobjects.MemberId;
 import lombok.Value;
 import lombok.experimental.Accessors;
-import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 
 /**
- * Created by novy on 04.01.15.
+ * Created by novy on 08.01.15.
  */
 
 @Value
 @Accessors(fluent = true)
-public class SignInterestCommand {
+public class MemberAlreadyInterestedInEventProposal {
 
-    @TargetAggregateIdentifier
     private final EventProposalId eventProposalId;
     private final MemberId memberId;
     private final String firstName;

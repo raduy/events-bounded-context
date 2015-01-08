@@ -15,10 +15,16 @@ public class EventProposalCreationTestCase extends EventProposalPreconfiguredTes
     public void createEventProposalCommandShouldCreateNewEventProposal() throws Exception {
         fixture.given()
                 .when(
-                        new CreateEventProposalCommand(EventProposalId.of("1234"), "Sample event proposal", EventDescription.of("Sample description"))
+                        new CreateEventProposalCommand(
+                                EventProposalId.of("1234"), "Sample event proposal",
+                                EventDescription.of("Sample description"), 15
+                        )
                 )
                 .expectEvents(
-                        new EventProposalCreatedEvent(EventProposalId.of("1234"), "Sample event proposal", EventDescription.of("Sample description"))
+                        new EventProposalCreatedEvent(
+                                EventProposalId.of("1234"), "Sample event proposal",
+                                EventDescription.of("Sample description"), 15
+                        )
                 );
     }
 }

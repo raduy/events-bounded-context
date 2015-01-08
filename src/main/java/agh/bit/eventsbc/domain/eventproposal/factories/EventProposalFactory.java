@@ -9,8 +9,12 @@ import agh.bit.eventsbc.domain.eventproposal.valueobjects.EventProposalId;
  */
 public class EventProposalFactory {
 
-    public static EventProposal create(EventProposalId id, String name, EventDescription description) {
-        return new EventProposal(id, name, description);
+    public static EventProposal create(EventProposalId id,
+                                       String name,
+                                       EventDescription description,
+                                       int requiredInterestThreshold) {
+
+        return new EventProposal(id, name, description, requiredInterestThreshold);
 
     }
 }

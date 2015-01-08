@@ -4,8 +4,6 @@ import agh.bit.eventsbc.domain.todolisttemplate.valueobjects.TodoListTemplateId;
 import lombok.Value;
 import lombok.experimental.Accessors;
 
-import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 
 /**

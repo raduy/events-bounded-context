@@ -6,7 +6,6 @@ import agh.bit.eventsbc.domain.todolisttemplate.valueobjects.TodoListTemplateId;
 import com.google.common.collect.ImmutableList;
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**

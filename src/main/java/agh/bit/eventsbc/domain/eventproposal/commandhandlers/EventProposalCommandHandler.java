@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
  * Created by novy handle 03.01.15.
  */
 
+//todo: shouldn't this be split between multiple handlers, one per usecase?
 @Component
 public class EventProposalCommandHandler {
 
@@ -21,7 +22,9 @@ public class EventProposalCommandHandler {
 
     @CommandHandler
     public void handle(CreateEventProposalCommand command) {
-        final EventProposal eventProposal = EventProposalFactory.create(command.eventProposalId(), command.name(), command.description());
+        final EventProposal eventProposal = EventProposalFactory.create(
+                command.eventProposalId(), command.name(), command.description(), command.requiredInterestThreshold()
+        );
         eventProposalRepository.add(eventProposal);
     }
 

@@ -19,13 +19,15 @@ public class AssigningTodoListToItemProposalTestCase
     public void assignTodoListToEventProposalCommandShouldAssignTodoListToEventProposal() throws Exception {
         final EventProposalId eventProposalId = EventProposalId.of("1234");
         final TodoListId todoListId = TodoListId.of("666");
+        final int eventProposalThreshold = 15;
 
         fixture
                 .given(
                         new EventProposalCreatedEvent(
                                 eventProposalId,
                                 "Sample event proposal",
-                                EventDescription.of("Sample description")
+                                EventDescription.of("Sample description"),
+                                eventProposalThreshold
                         )
                 )
                 .when(
@@ -49,13 +51,15 @@ public class AssigningTodoListToItemProposalTestCase
         final EventProposalId eventProposalId = EventProposalId.of("1234");
         final TodoListId firstTodoListId = TodoListId.of("666");
         final TodoListId secondTodoListId = TodoListId.of("333");
+        final int eventProposalThreshold = 15;
 
         fixture
                 .given(
                         new EventProposalCreatedEvent(
                                 eventProposalId,
                                 "Sample event proposal",
-                                EventDescription.of("Sample description")
+                                EventDescription.of("Sample description"),
+                                eventProposalThreshold
                         ),
                         new TodoListAssignedToEventProposalEvent(
                                 eventProposalId,
