@@ -1,5 +1,6 @@
 package agh.bit.eventsbc.domain.eventmaster.valueobjects;
 
+import agh.bit.eventsbc.domain.common.DomainIdentifier;
 import lombok.Value;
 
 /**
@@ -7,7 +8,7 @@ import lombok.Value;
  */
 
 @Value(staticConstructor = "of")
-public class EventMasterId {
+public class EventMasterId implements DomainIdentifier {
 
     private final String id;
 }

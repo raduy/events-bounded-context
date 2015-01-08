@@ -4,7 +4,6 @@ import agh.bit.eventsbc.domain.todolist.entities.TodoItem;
 import agh.bit.eventsbc.domain.todolist.valueobjects.TodoItemId;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 /**
  * Created by novy on 05.01.15.

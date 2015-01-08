@@ -1,5 +1,6 @@
 package agh.bit.eventsbc.domain.todolisttemplate.valueobjects;
 
+import agh.bit.eventsbc.domain.common.DomainIdentifier;
 import lombok.Value;
 import lombok.experimental.Accessors;
 
@@ -9,7 +10,7 @@ import lombok.experimental.Accessors;
 
 @Value(staticConstructor = "of")
 @Accessors(fluent = true)
-public class TodoListTemplateId {
+public class TodoListTemplateId implements DomainIdentifier {
 
     private final String id;
 }

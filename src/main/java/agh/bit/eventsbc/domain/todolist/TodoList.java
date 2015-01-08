@@ -1,5 +1,6 @@
 package agh.bit.eventsbc.domain.todolist;
 
+import agh.bit.eventsbc.domain.common.IdentifiedDomainAggregateRoot;
 import agh.bit.eventsbc.domain.eventproposal.factories.TodoItemFactory;
 import agh.bit.eventsbc.domain.eventproposal.factories.TodoItemIdProvider;
 import agh.bit.eventsbc.domain.todolist.entities.TodoItem;
@@ -8,8 +9,6 @@ import agh.bit.eventsbc.domain.todolist.valueobjects.TodoItemId;
 import agh.bit.eventsbc.domain.todolist.valueobjects.TodoListId;
 import agh.bit.eventsbc.domain.todolisttemplate.TodoListTemplate;
 import com.google.common.collect.Lists;
-import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
-import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcedMember;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 
@@ -24,10 +23,7 @@ import java.util.stream.IntStream;
 /**
  * Created by novy handle 03.01.15.
  */
-public class TodoList extends AbstractAnnotatedAggregateRoot {
-
-    @AggregateIdentifier
-    private TodoListId id;
+public class TodoList extends IdentifiedDomainAggregateRoot<TodoListId> {
 
     @EventSourcedMember
     private List<TodoItem> todoItems = Lists.newArrayList();

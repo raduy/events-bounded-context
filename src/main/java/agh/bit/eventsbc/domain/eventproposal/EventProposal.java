@@ -1,22 +1,19 @@
 package agh.bit.eventsbc.domain.eventproposal;
 
+import agh.bit.eventsbc.domain.common.IdentifiedDomainAggregateRoot;
 import agh.bit.eventsbc.domain.eventproposal.events.EventProposalAlreadyHasTodoListEvent;
 import agh.bit.eventsbc.domain.eventproposal.events.EventProposalCreatedEvent;
 import agh.bit.eventsbc.domain.eventproposal.events.TodoListAssignedToEventProposalEvent;
 import agh.bit.eventsbc.domain.eventproposal.valueobjects.EventDescription;
 import agh.bit.eventsbc.domain.eventproposal.valueobjects.EventProposalId;
 import agh.bit.eventsbc.domain.todolist.valueobjects.TodoListId;
-import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
-import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 
 /**
  * Created by novy handle 03.01.15.
  */
-public class EventProposal extends AbstractAnnotatedAggregateRoot {
+public class EventProposal extends IdentifiedDomainAggregateRoot<EventProposalId> {
 
-    @AggregateIdentifier
-    private EventProposalId eventProposalId;
     private String name;
     private TodoListId todoListId;
     private EventDescription description;
@@ -28,28 +25,20 @@ public class EventProposal extends AbstractAnnotatedAggregateRoot {
         apply(new EventProposalCreatedEvent(eventProposalId, name, description));
     }
 
-    private void setEventProposalId(EventProposalId eventProposalId) {
-        this.eventProposalId = eventProposalId;
-    }
-
-    private void setName(String name) {
-        this.name = name;
-    }
-
     public void assignTodoList(TodoListId todoListId) {
         if (alreadyHasTodoListAssigned()) {
-            apply(new EventProposalAlreadyHasTodoListEvent(eventProposalId));
+            apply(new EventProposalAlreadyHasTodoListEvent(id));
             return;
         }
 
-        apply(new TodoListAssignedToEventProposalEvent(eventProposalId, todoListId));
+        apply(new TodoListAssignedToEventProposalEvent(id, todoListId));
     }
 
 
     @EventSourcingHandler
     public void on(EventProposalCreatedEvent event) {
-        this.setEventProposalId(event.eventProposalId());
-        this.setName(event.name());
+        this.id = event.eventProposalId();
+        this.name = event.name();
     }
 
     @EventSourcingHandler

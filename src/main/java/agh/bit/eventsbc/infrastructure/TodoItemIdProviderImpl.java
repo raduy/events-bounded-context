@@ -3,7 +3,6 @@ package agh.bit.eventsbc.infrastructure;
 import agh.bit.eventsbc.domain.eventproposal.factories.TodoItemIdProvider;
 import agh.bit.eventsbc.domain.todolist.valueobjects.TodoItemId;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
 
 import java.util.List;
 import java.util.UUID;
