@@ -3,6 +3,8 @@ package agh.bit.eventsbc.domain.common;
 import agh.bit.eventsbc.domain.eventproposal.EventProposal;
 import agh.bit.eventsbc.domain.eventproposal.commandhandlers.EventProposalCommandHandler;
 import agh.bit.eventsbc.domain.eventproposal.commandhandlers.SingingInterestService;
+import agh.bit.eventsbc.domain.eventproposalrequest.EventProposalRequest;
+import agh.bit.eventsbc.domain.eventproposalrequest.commandhandlers.EventProposalRequestCommandHandler;
 import agh.bit.eventsbc.domain.todolist.TodoList;
 import agh.bit.eventsbc.domain.todolist.commandhandlers.TodoListCommandHandler;
 import agh.bit.eventsbc.domain.todolisttemplate.TodoListTemplate;
@@ -27,6 +29,18 @@ public class FixtureFactory {
 
         fixture.registerAnnotatedCommandHandler(commandHandler);
         fixture.registerAnnotatedCommandHandler(singingInterestService);
+
+        return fixture;
+    }
+
+    // todo: DRY
+    public static FixtureConfiguration onEventProposalRequestPreconfiguredFixture() {
+        FixtureConfiguration fixture = Fixtures.newGivenWhenThenFixture(EventProposalRequest.class);
+
+        EventProposalRequestCommandHandler commandHandler = new EventProposalRequestCommandHandler();
+        commandHandler.setEventProposalRequestRepository(fixture.getRepository());
+
+        fixture.registerAnnotatedCommandHandler(commandHandler);
 
         return fixture;
     }
