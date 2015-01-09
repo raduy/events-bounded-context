@@ -1,5 +1,7 @@
 package agh.bit.eventsbc.domain.common;
 
+import agh.bit.eventsbc.domain.event.Event;
+import agh.bit.eventsbc.domain.event.EventCommandHandler;
 import agh.bit.eventsbc.domain.eventproposal.EventProposal;
 import agh.bit.eventsbc.domain.eventproposal.commandhandlers.EventProposalCommandHandler;
 import agh.bit.eventsbc.domain.eventproposal.commandhandlers.SingingInterestService;
@@ -58,6 +60,14 @@ public class FixtureFactory {
         TodoListTemplateCommandHandler commandHandler = new TodoListTemplateCommandHandler();
         commandHandler.setTodoListTemplateRepository(fixture.getRepository());
         fixture.registerAnnotatedCommandHandler(commandHandler);
+        return fixture;
+    }
+
+    public static FixtureConfiguration onEventPreconfiguredFixture( ) {
+        FixtureConfiguration fixture = Fixtures.newGivenWhenThenFixture( Event.class );
+        EventCommandHandler commandHandler = new EventCommandHandler( );
+        commandHandler.setEventRepository( fixture.getRepository( ) );
+        fixture.registerAnnotatedCommandHandler( commandHandler );
         return fixture;
     }
 }
