@@ -21,13 +21,13 @@ public class EventProposalCreationTestCase extends EventProposalPreconfiguredTes
                 .when(
                         CreateEventProposalCommandBuilder
                         .newCreateEventProposalCommand()
-                        .withEventProposalId(eventProposalId)
+                        .eventProposalId(eventProposalId)
                         .build()
                 )
                 .expectEvents(
                         EventProposalCreatedEventBuilder
                         .newEventProposalCreatedEvent()
-                        .withEventProposalId(eventProposalId)
+                        .eventProposalId(eventProposalId)
                         .build()
                 );
     }

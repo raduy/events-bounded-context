@@ -26,9 +26,10 @@ public class AssigningTodoListToItemProposalTestCase
     public void setUp() throws Exception {
         super.setUp();
 
-        eventProposalCreatedEvent = new EventProposalCreatedEventBuilder()
-                .withEventProposalId(eventProposalId)
-                .withRequiredAcceptanceThreshold(15)
+        eventProposalCreatedEvent = EventProposalCreatedEventBuilder
+                .newEventProposalCreatedEvent()
+                .eventProposalId(eventProposalId)
+                .requiredAcceptanceThreshold(15)
                 .build();
     }
 
