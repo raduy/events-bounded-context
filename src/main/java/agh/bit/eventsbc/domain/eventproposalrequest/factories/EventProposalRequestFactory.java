@@ -13,5 +13,4 @@ public class EventProposalRequestFactory {
         return new EventProposalRequest(id, name, description, author);
 
     }
-
 }

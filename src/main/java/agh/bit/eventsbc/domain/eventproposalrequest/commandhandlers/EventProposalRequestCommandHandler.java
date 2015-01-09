@@ -5,11 +5,7 @@ import agh.bit.eventsbc.domain.eventproposalrequest.commands.CreateEventProposal
 import agh.bit.eventsbc.domain.eventproposalrequest.factories.EventProposalRequestFactory;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 
-@Component
 public class EventProposalRequestCommandHandler {
 
     private Repository<EventProposalRequest> eventProposalRequestRepository;
@@ -22,10 +18,7 @@ public class EventProposalRequestCommandHandler {
         eventProposalRequestRepository.add(eventProposalRequest);
     }
 
-    @Autowired
-    @Qualifier("eventProposalRequestRepository")
     public void setEventProposalRequestRepository(Repository<EventProposalRequest> eventProposalRequestRepository) {
         this.eventProposalRequestRepository = eventProposalRequestRepository;
     }
-
 }

@@ -1,11 +1,8 @@
 package agh.bit.eventsbc.domain.eventproposalrequest;
 
-import agh.bit.eventsbc.domain.eventproposal.commands.CreateEventProposalCommand;
-import agh.bit.eventsbc.domain.eventproposal.valueobjects.EventDescription;
-import agh.bit.eventsbc.domain.eventproposal.valueobjects.EventProposalId;
 import agh.bit.eventsbc.domain.eventproposalrequest.commands.CreateEventProposalRequestCommand;
+import agh.bit.eventsbc.domain.eventproposalrequest.events.EventProposalRequestCreatedEvent;
 import agh.bit.eventsbc.domain.eventproposalrequest.valueobjects.EventProposalRequestId;
-import agh.bit.eventsbc.domain.events.eventproposalrequest.EventProposalRequestCreatedEvent;
 import org.junit.Test;
 
 public class EventProposalRequestCreationTestCase extends EventProposalRequestPreconfiguredTestCase {
@@ -30,5 +27,4 @@ public class EventProposalRequestCreationTestCase extends EventProposalRequestPr
                         )
                 );
     }
-
 }
