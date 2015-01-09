@@ -1,5 +1,7 @@
 package agh.bit.eventsbc.domain.eventproposal;
 
+import agh.bit.eventsbc.domain.eventproposal.builders.CreateEventProposalCommandBuilder;
+import agh.bit.eventsbc.domain.eventproposal.builders.EventProposalCreatedEventBuilder;
 import agh.bit.eventsbc.domain.eventproposal.commands.CreateEventProposalCommand;
 import agh.bit.eventsbc.domain.eventproposal.events.EventProposalCreatedEvent;
 import agh.bit.eventsbc.domain.eventproposal.valueobjects.EventDescription;
@@ -11,20 +13,22 @@ import org.junit.Test;
  */
 public class EventProposalCreationTestCase extends EventProposalPreconfiguredTestCase {
 
+    private final EventProposalId eventProposalId = EventProposalId.of("123");
+
     @Test
     public void createEventProposalCommandShouldCreateNewEventProposal() throws Exception {
         fixture.given()
                 .when(
-                        new CreateEventProposalCommand(
-                                EventProposalId.of("1234"), "Sample event proposal",
-                                EventDescription.of("Sample description"), 15
-                        )
+                        CreateEventProposalCommandBuilder
+                        .newCreateEventProposalCommand()
+                        .withEventProposalId(eventProposalId)
+                        .build()
                 )
                 .expectEvents(
-                        new EventProposalCreatedEvent(
-                                EventProposalId.of("1234"), "Sample event proposal",
-                                EventDescription.of("Sample description"), 15
-                        )
+                        EventProposalCreatedEventBuilder
+                        .newEventProposalCreatedEvent()
+                        .withEventProposalId(eventProposalId)
+                        .build()
                 );
     }
 }

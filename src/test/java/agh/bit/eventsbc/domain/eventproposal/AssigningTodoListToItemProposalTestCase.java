@@ -1,12 +1,13 @@
 package agh.bit.eventsbc.domain.eventproposal;
 
+import agh.bit.eventsbc.domain.eventproposal.builders.EventProposalCreatedEventBuilder;
 import agh.bit.eventsbc.domain.eventproposal.commands.AssignTodoListToEventProposalCommand;
 import agh.bit.eventsbc.domain.eventproposal.events.EventProposalAlreadyHasTodoListEvent;
 import agh.bit.eventsbc.domain.eventproposal.events.EventProposalCreatedEvent;
 import agh.bit.eventsbc.domain.eventproposal.events.TodoListAssignedToEventProposalEvent;
-import agh.bit.eventsbc.domain.eventproposal.valueobjects.EventDescription;
 import agh.bit.eventsbc.domain.eventproposal.valueobjects.EventProposalId;
 import agh.bit.eventsbc.domain.todolist.valueobjects.TodoListId;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -15,21 +16,27 @@ import org.junit.Test;
 public class AssigningTodoListToItemProposalTestCase
         extends EventProposalPreconfiguredTestCase {
 
+    private final EventProposalId eventProposalId = EventProposalId.of("1234");
+    private final TodoListId todoListId = TodoListId.of("666");
+
+    private EventProposalCreatedEvent eventProposalCreatedEvent;
+
+    @Override
+    @Before
+    public void setUp() throws Exception {
+        super.setUp();
+
+        eventProposalCreatedEvent = new EventProposalCreatedEventBuilder()
+                .withEventProposalId(eventProposalId)
+                .withRequiredAcceptanceThreshold(15)
+                .build();
+    }
+
     @Test
     public void assignTodoListToEventProposalCommandShouldAssignTodoListToEventProposal() throws Exception {
-        final EventProposalId eventProposalId = EventProposalId.of("1234");
-        final TodoListId todoListId = TodoListId.of("666");
-        final int eventProposalThreshold = 15;
 
         fixture
-                .given(
-                        new EventProposalCreatedEvent(
-                                eventProposalId,
-                                "Sample event proposal",
-                                EventDescription.of("Sample description"),
-                                eventProposalThreshold
-                        )
-                )
+                .given(eventProposalCreatedEvent)
                 .when(
                         new AssignTodoListToEventProposalCommand(
                                 eventProposalId,
@@ -51,16 +58,10 @@ public class AssigningTodoListToItemProposalTestCase
         final EventProposalId eventProposalId = EventProposalId.of("1234");
         final TodoListId firstTodoListId = TodoListId.of("666");
         final TodoListId secondTodoListId = TodoListId.of("333");
-        final int eventProposalThreshold = 15;
 
         fixture
                 .given(
-                        new EventProposalCreatedEvent(
-                                eventProposalId,
-                                "Sample event proposal",
-                                EventDescription.of("Sample description"),
-                                eventProposalThreshold
-                        ),
+                        eventProposalCreatedEvent,
                         new TodoListAssignedToEventProposalEvent(
                                 eventProposalId,
                                 firstTodoListId
@@ -76,7 +77,6 @@ public class AssigningTodoListToItemProposalTestCase
                         new EventProposalAlreadyHasTodoListEvent(
                                 eventProposalId
                         )
-
                 );
     }
 }
