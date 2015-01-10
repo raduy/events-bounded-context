@@ -23,11 +23,11 @@ public class CreateEventProposalCommandBuilder {
     private EventProposalId eventProposalId = EventProposalId.of("default ID");
     private String name = "default name";
     private EventDescription description = EventDescription.of("default description");
-    private int requiredAcceptanceThreshold = 15;
+    private int minimalInterestThreshold = 15;
 
     public CreateEventProposalCommand build() {
         return new CreateEventProposalCommand(
-                eventProposalId, name, description, requiredAcceptanceThreshold
+                eventProposalId, name, description, minimalInterestThreshold
         );
     }
 }

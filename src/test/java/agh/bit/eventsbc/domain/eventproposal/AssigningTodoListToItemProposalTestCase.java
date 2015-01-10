@@ -29,7 +29,7 @@ public class AssigningTodoListToItemProposalTestCase
         eventProposalCreatedEvent = EventProposalCreatedEventBuilder
                 .newEventProposalCreatedEvent()
                 .eventProposalId(eventProposalId)
-                .requiredAcceptanceThreshold(15)
+                .minimalInterestThreshold(15)
                 .build();
     }
 

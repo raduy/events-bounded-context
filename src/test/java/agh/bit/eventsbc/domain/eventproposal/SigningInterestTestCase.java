@@ -83,43 +83,4 @@ public class SigningInterestTestCase extends EventProposalPreconfiguredTestCase 
                         )
                 );
     }
-
-    @Test
-    public void shouldProduceMemberInterestSatisfiedEventWhenMinimalInterestSatisfied()
-            throws Exception {
-
-        final MemberId secondMemberId = MemberId.of("777");
-        final String secondMemberFirstName = "some";
-        final String secondMemberLastName = "member";
-        final String secondMemberEmail = "some.member@gmail.com";
-
-        SignInterestCommand signInterestForSecondMemberCommand = new SignInterestCommand(
-                eventProposalId,
-                secondMemberId,
-                secondMemberFirstName,
-                secondMemberLastName,
-                secondMemberEmail
-        );
-
-
-        MemberSignedInterestEvent secondMemberSignedInterestEvent = new MemberSignedInterestEvent(
-                eventProposalId,
-                secondMemberId,
-                secondMemberFirstName,
-                secondMemberLastName,
-                secondMemberEmail
-        );
-
-        fixture
-                .given(
-                        eventProposalCreatedEvent,
-                        firstMemberSignedInterestEvent
-                )
-                .when(signInterestForSecondMemberCommand)
-                .expectEvents(
-                        secondMemberSignedInterestEvent,
-                        new MinimalInterestedSatisfiedEvent(eventProposalId)
-                );
-
-    }
 }

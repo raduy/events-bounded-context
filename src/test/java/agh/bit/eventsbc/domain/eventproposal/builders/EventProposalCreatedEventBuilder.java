@@ -19,11 +19,11 @@ public class EventProposalCreatedEventBuilder {
     private EventProposalId eventProposalId = EventProposalId.of("default ID");
     private String name = "default name";
     private EventDescription description = EventDescription.of("default description");
-    private int requiredAcceptanceThreshold = 15;
+    private int minimalInterestThreshold = 15;
 
     public EventProposalCreatedEvent build() {
         return new EventProposalCreatedEvent(
-                eventProposalId, name, description, requiredAcceptanceThreshold
+                eventProposalId, name, description, minimalInterestThreshold
         );
     }
 }

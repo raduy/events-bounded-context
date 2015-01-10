@@ -16,6 +16,6 @@ public class CreateEventProposalCommand {
     private final EventProposalId eventProposalId;
     private final String name;
     private final EventDescription description;
-    private final int requiredInterestThreshold;
+    private final int minimalInterestThreshold;
 
 }

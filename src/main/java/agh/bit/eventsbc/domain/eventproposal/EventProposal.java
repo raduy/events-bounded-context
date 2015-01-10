@@ -20,7 +20,7 @@ public class EventProposal extends IdentifiedDomainAggregateRoot<EventProposalId
     private String name;
     private TodoListId todoListId;
     private EventDescription description;
-    private int requirdedInterestThreshold;
+    private int minimalInterestThreshold;
     private List<Student> interestedStudents = Lists.newArrayList();
 
     private EventProposal() {
@@ -46,7 +46,7 @@ public class EventProposal extends IdentifiedDomainAggregateRoot<EventProposalId
         this.id = event.eventProposalId();
         this.name = event.name();
         this.description = event.description();
-        this.requirdedInterestThreshold = event.requiredAcceptanceThreshold();
+        this.minimalInterestThreshold = event.minimalInterestThreshold();
     }
 
     @EventSourcingHandler
@@ -64,26 +64,17 @@ public class EventProposal extends IdentifiedDomainAggregateRoot<EventProposalId
             return;
         }
 
-        // todo: isn't this asynchronous?
         apply(new MemberSignedInterestEvent(
                         id, memberId, firstName, lastName, email
                 )
         );
 
-        // todo: when should i check if this event haven't occurred in the past?
-        if (minimalInterestSatisfied()) {
-            apply(new MinimalInterestedSatisfiedEvent(id));
-        }
 
     }
 
     private boolean studentAlreadyInterestedInEvent(MemberId memberId) {
         return interestedStudents.stream()
                 .anyMatch(student -> student.matchesId(memberId));
-    }
-
-    private boolean minimalInterestSatisfied() {
-        return interestedStudents.size() >= requirdedInterestThreshold;
     }
 
     @EventSourcingHandler

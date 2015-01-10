@@ -16,6 +16,6 @@ public class EventProposalCreatedEvent {
     private final EventProposalId eventProposalId;
     private final String name;
     private final EventDescription description;
-    private final int requiredAcceptanceThreshold;
+    private final int minimalInterestThreshold;
 
 }
