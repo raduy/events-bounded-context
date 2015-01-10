@@ -12,8 +12,6 @@ import org.springframework.stereotype.Component;
  * Created by novy on 08.01.15.
  */
 
-//todo: should this be named this way?
-
 @Component
 public class SingingInterestService {
 

@@ -1,4 +1,4 @@
-package agh.bit.eventsbc.domain.todolist;
+package agh.bit.eventsbc.domain.todolist.builders;
 
 import agh.bit.eventsbc.domain.todolisttemplate.TodoListTemplate;
 import agh.bit.eventsbc.domain.todolisttemplate.valueobjects.TodoListTemplateId;
@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by novy on 06.01.15.
  */
-class TemplateBuilder {
+public class TemplateBuilder {
 
     private TodoListTemplateId id;
     private List<String> descriptions;

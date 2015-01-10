@@ -1,11 +1,14 @@
 package agh.bit.eventsbc.domain.todolist;
 
+import agh.bit.eventsbc.domain.todolist.builders.AssignTodoItemToTodoListCommandBuilder;
+import agh.bit.eventsbc.domain.todolist.builders.TodoItemAssignedToTodoListEventBuilder;
 import agh.bit.eventsbc.domain.todolist.commands.AssignTodoItemToTodoListCommand;
 import agh.bit.eventsbc.domain.todolist.events.TodoItemAssignedToTodoListEvent;
 import agh.bit.eventsbc.domain.todolist.events.TodoItemNotAssignedToTodoList;
 import agh.bit.eventsbc.domain.todolist.events.TodoListCreatedEvent;
 import agh.bit.eventsbc.domain.todolist.valueobjects.TodoItemId;
 import agh.bit.eventsbc.domain.todolist.valueobjects.TodoListId;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -17,58 +20,54 @@ public class AssigningTodoItemToTodoListTestCase
         extends TodoListPreconfiguredTestCase {
 
     private final TodoListId todoListId = TodoListId.of("dummy id");
+    private final TodoItemId todoItemId = TodoItemId.of("123");
 
+    private TodoListCreatedEvent todoListCreatedEvent;
+    private AssignTodoItemToTodoListCommand assignTodoItemToTodoListCommand;
+    private TodoItemAssignedToTodoListEvent todoItemAssignedToTodoListEvent;
+
+    @Override
+    @Before
+    public void setUp() throws Exception {
+        super.setUp();
+        
+        todoListCreatedEvent = new TodoListCreatedEvent(
+                todoListId
+        );
+
+        assignTodoItemToTodoListCommand = AssignTodoItemToTodoListCommandBuilder
+                .newAssignTodoItemToTodoListCommand()
+                .todoListId(todoListId)
+                .todoItemId(todoItemId)
+                .build();
+
+        todoItemAssignedToTodoListEvent = TodoItemAssignedToTodoListEventBuilder
+                .newTodoItemAssignedToTodoListEvent()
+                .todoListId(todoListId)
+                .todoItemId(todoItemId)
+                .build();
+    }
 
     @Test
     public void assignTodoItemToTodoListShouldCreateNewTodoItem() throws Exception {
-        final TodoItemId todoItemId = TodoItemId.of("123");
-        final String content = "content";
-        final LocalDate now = LocalDate.now();
 
         fixture
-                .given(
-                        new TodoListCreatedEvent(
-                                todoListId
-                        )
-                )
-                .when(
-                        new AssignTodoItemToTodoListCommand(
-                                todoListId, todoItemId,
-                                content, now
-                        )
-                )
-                .expectEvents(
-                        new TodoItemAssignedToTodoListEvent(
-                                todoListId, todoItemId,
-                                content, now
-                        )
-                );
+                .given(todoListCreatedEvent)
+                .when(assignTodoItemToTodoListCommand)
+                .expectEvents(todoItemAssignedToTodoListEvent);
 
     }
 
     @Test
     public void assigningTodoItemWithSameIdTwiceShouldFail() throws Exception {
-        final TodoItemId todoItemId = TodoItemId.of("123");
-        final String content = "content";
-        final LocalDate now = LocalDate.now();
 
         fixture
                 .given(
-                        new TodoListCreatedEvent(
-                                todoListId
-                        ),
-                        new TodoItemAssignedToTodoListEvent(
-                                todoListId, todoItemId,
-                                 content, now
-                        )
+                        todoListCreatedEvent,
+                        todoItemAssignedToTodoListEvent
+
                 )
-                .when(
-                        new AssignTodoItemToTodoListCommand(
-                                todoListId, todoItemId,
-                                "different content",
-                                LocalDate.now()
-                        )
-                )
+                .when(assignTodoItemToTodoListCommand)
                 .expectEvents(
                         new TodoItemNotAssignedToTodoList(
                                 todoListId, todoItemId
