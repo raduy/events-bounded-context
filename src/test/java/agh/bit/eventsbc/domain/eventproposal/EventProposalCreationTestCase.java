@@ -20,15 +20,15 @@ public class EventProposalCreationTestCase extends EventProposalPreconfiguredTes
         fixture.given()
                 .when(
                         CreateEventProposalCommandBuilder
-                        .newCreateEventProposalCommand()
-                        .eventProposalId(eventProposalId)
-                        .build()
+                                .newCreateEventProposalCommand()
+                                .eventProposalId(eventProposalId)
+                                .build()
                 )
                 .expectEvents(
                         EventProposalCreatedEventBuilder
-                        .newEventProposalCreatedEvent()
-                        .eventProposalId(eventProposalId)
-                        .build()
+                                .newEventProposalCreatedEvent()
+                                .eventProposalId(eventProposalId)
+                                .build()
                 );
     }
 }
