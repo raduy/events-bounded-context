@@ -23,7 +23,7 @@ public class EventProposalCommandHandler {
     @CommandHandler
     public void handle(CreateEventProposalCommand command) {
         final EventProposal eventProposal = EventProposalFactory.create(
-                command.eventProposalId(), command.name(), command.description(), command.requiredInterestThreshold()
+                command.eventProposalId(), command.name(), command.description(), command.minimalInterestThreshold()
         );
         eventProposalRepository.add(eventProposal);
     }

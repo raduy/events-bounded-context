@@ -1,5 +1,9 @@
 package agh.bit.eventsbc.domain.eventproposal;
 
+import agh.bit.eventsbc.domain.eventproposal.builders.EventProposalCreatedEventBuilder;
+import agh.bit.eventsbc.domain.eventproposal.builders.MemberAlreadyInterestedInEventProposalEventBuilder;
+import agh.bit.eventsbc.domain.eventproposal.builders.MemberSignedInterestEventBuilder;
+import agh.bit.eventsbc.domain.eventproposal.builders.SignInterestCommandBuilder;
 import agh.bit.eventsbc.domain.eventproposal.commands.SignInterestCommand;
 import agh.bit.eventsbc.domain.eventproposal.events.EventProposalCreatedEvent;
 import agh.bit.eventsbc.domain.eventproposal.events.MemberAlreadyInterestedInEventProposal;
@@ -16,13 +20,13 @@ import org.junit.Test;
  */
 public class SigningInterestTestCase extends EventProposalPreconfiguredTestCase {
 
-    final int interestThreshold = 2;
     private final EventProposalId eventProposalId = EventProposalId.of("132");
+    private final int interestThreshold = 2;
 
-    final MemberId firstMemberId = MemberId.of("666");
-    final String firstMemberFirstName = "Eric";
-    final String firstMemberLastName = "Evans";
-    final String firstMemberEmail = "eric.evans@gmail.com";
+    private final MemberId firstMemberId = MemberId.of("666");
+    private final String firstMemberFirstName = "Eric";
+    private final String firstMemberLastName = "Evans";
+    private final String firstMemberEmail = "eric.evans@gmail.com";
 
     private EventProposalCreatedEvent eventProposalCreatedEvent;
     private SignInterestCommand signInterestForFirstMemberCommand;
@@ -33,28 +37,29 @@ public class SigningInterestTestCase extends EventProposalPreconfiguredTestCase 
     public void setUp() throws Exception {
         super.setUp();
 
-        eventProposalCreatedEvent = new EventProposalCreatedEvent(
-                eventProposalId,
-                "event",
-                EventDescription.of("desc"),
-                interestThreshold
-        );
+        eventProposalCreatedEvent = EventProposalCreatedEventBuilder
+                .newEventProposalCreatedEvent()
+                .eventProposalId(eventProposalId)
+                .minimalInterestThreshold(interestThreshold)
+                .build();
 
-        signInterestForFirstMemberCommand = new SignInterestCommand(
-                eventProposalId,
-                firstMemberId,
-                firstMemberFirstName,
-                firstMemberLastName,
-                firstMemberEmail
-        );
+        signInterestForFirstMemberCommand = SignInterestCommandBuilder
+                .newSignInterestCommand()
+                .eventProposalId(eventProposalId)
+                .memberId(firstMemberId)
+                .firstName(firstMemberFirstName)
+                .lastName(firstMemberLastName)
+                .email(firstMemberEmail)
+                .build();
 
-        firstMemberSignedInterestEvent = new MemberSignedInterestEvent(
-                eventProposalId,
-                firstMemberId,
-                firstMemberFirstName,
-                firstMemberLastName,
-                firstMemberEmail
-        );
+        firstMemberSignedInterestEvent = MemberSignedInterestEventBuilder
+                .newSignedInterestEvent()
+                .eventProposalId(eventProposalId)
+                .memberId(firstMemberId)
+                .firstName(firstMemberFirstName)
+                .lastName(firstMemberLastName)
+                .email(firstMemberEmail)
+                .build();
     }
 
     @Test
@@ -74,52 +79,14 @@ public class SigningInterestTestCase extends EventProposalPreconfiguredTestCase 
                 )
                 .when(signInterestForFirstMemberCommand)
                 .expectEvents(
-                        new MemberAlreadyInterestedInEventProposal(
-                                eventProposalId,
-                                firstMemberId,
-                                firstMemberFirstName,
-                                firstMemberLastName,
-                                firstMemberEmail
-                        )
+                        MemberAlreadyInterestedInEventProposalEventBuilder
+                                .newMemberAlreadyInterestedInEventProposalEvent()
+                                .eventProposalId(eventProposalId)
+                                .memberId(firstMemberId)
+                                .firstName(firstMemberFirstName)
+                                .lastName(firstMemberLastName)
+                                .email(firstMemberEmail)
+                                .build()
                 );
-    }
-
-    @Test
-    public void shouldProduceMemberInterestSatisfiedEventWhenMinimalInterestSatisfied()
-            throws Exception {
-
-        final MemberId secondMemberId = MemberId.of("777");
-        final String secondMemberFirstName = "some";
-        final String secondMemberLastName = "member";
-        final String secondMemberEmail = "some.member@gmail.com";
-
-        SignInterestCommand signInterestForSecondMemberCommand = new SignInterestCommand(
-                eventProposalId,
-                secondMemberId,
-                secondMemberFirstName,
-                secondMemberLastName,
-                secondMemberEmail
-        );
-
-
-        MemberSignedInterestEvent secondMemberSignedInterestEvent = new MemberSignedInterestEvent(
-                eventProposalId,
-                secondMemberId,
-                secondMemberFirstName,
-                secondMemberLastName,
-                secondMemberEmail
-        );
-
-        fixture
-                .given(
-                        eventProposalCreatedEvent,
-                        firstMemberSignedInterestEvent
-                )
-                .when(signInterestForSecondMemberCommand)
-                .expectEvents(
-                        secondMemberSignedInterestEvent,
-                        new MinimalInterestedSatisfiedEvent(eventProposalId)
-                );
-
     }
 }

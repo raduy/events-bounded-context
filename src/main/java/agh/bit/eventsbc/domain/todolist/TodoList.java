@@ -74,7 +74,6 @@ public class TodoList extends IdentifiedDomainAggregateRoot<TodoListId> {
         todoItems.add(item);
     }
 
-    // todo: consider somehow moving check into TodoItem itself
     public void markTodoItemDone(TodoItemId todoItemId) {
         final Optional<TodoItem> todoItemOptional = todoItems.stream()
                 .filter(todoItem -> todoItem.matchesId(todoItemId))
@@ -92,7 +91,6 @@ public class TodoList extends IdentifiedDomainAggregateRoot<TodoListId> {
         apply(new TodoItemMarkedDoneEvent(id, todoItemId));
     }
 
-    // todo: consider doing it without this messy idProvider closure
     public void fulfillWith(TodoListTemplate todoListTemplate, LocalDate creationDate, TodoItemIdProvider provider) {
         if (alreadyHasAnyTodoItem()) {
             apply(new TodoListNotFulfilledWithTemplateEvent(

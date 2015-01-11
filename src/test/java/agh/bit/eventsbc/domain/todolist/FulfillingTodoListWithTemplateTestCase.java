@@ -1,6 +1,7 @@
 package agh.bit.eventsbc.domain.todolist;
 
 import agh.bit.eventsbc.domain.eventproposal.factories.TodoItemIdProvider;
+import agh.bit.eventsbc.domain.todolist.builders.TemplateBuilder;
 import agh.bit.eventsbc.domain.todolist.commandhandlers.FulfillTodoListWithTemplateCommand;
 import agh.bit.eventsbc.domain.todolist.commands.FulfillingTodoListWithTemplateCommandHandler;
 import agh.bit.eventsbc.domain.todolist.events.TodoItemAssignedToTodoListEvent;
