@@ -30,7 +30,7 @@ public class AssigningTodoItemToTodoListTestCase
     @Before
     public void setUp() throws Exception {
         super.setUp();
-        
+
         todoListCreatedEvent = new TodoListCreatedEvent(
                 todoListId
         );

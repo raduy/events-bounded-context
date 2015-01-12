@@ -5,7 +5,7 @@ import agh.bit.eventsbc.domain.event.valueobjects.EventId;
 public class AttendeeListClosedEvent {
     public final EventId eventId;
 
-    public AttendeeListClosedEvent( EventId eventId ) {
+    public AttendeeListClosedEvent(EventId eventId) {
         this.eventId = eventId;
     }
 }

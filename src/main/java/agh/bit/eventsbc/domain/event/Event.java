@@ -1,26 +1,21 @@
 package agh.bit.eventsbc.domain.event;
 
+import agh.bit.eventsbc.domain.common.IdentifiedDomainAggregateRoot;
 import agh.bit.eventsbc.domain.event.events.*;
 import agh.bit.eventsbc.domain.event.factories.AttendeeFactory;
 import agh.bit.eventsbc.domain.event.valueobjects.AttendeeId;
 import agh.bit.eventsbc.domain.event.valueobjects.EventId;
-import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
-import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
-import org.axonframework.eventsourcing.annotation.EventSourcedMember;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 
-import java.util.Collections;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Event extends AbstractAnnotatedAggregateRoot {
+import static java.util.Collections.unmodifiableList;
 
-    @AggregateIdentifier
-    private EventId eventId;
+public class Event extends IdentifiedDomainAggregateRoot<EventId> {
+
     private String name;
-
-    @EventSourcedMember
-    private List<Attendee> attendees = new LinkedList<>();
+    private List<Attendee> attendees = new ArrayList<>();
     //@TODO dopisać todoList
     //@TODO dopisać EventDescription
     private int maxAttendeesCount;
@@ -30,69 +25,67 @@ public class Event extends AbstractAnnotatedAggregateRoot {
     private Event() {
     }
 
-    public Event(EventId eventId, String name, int maxAttendeesCount) {
-        apply( new EventCreatedEvent( eventId, name, maxAttendeesCount ));
+    public Event(EventId id, String name, int maxAttendeesCount) {
+        apply(new EventCreatedEvent(id, name, maxAttendeesCount));
     }
 
     public List<Attendee> getAttendees() {
-        return Collections.unmodifiableList( attendees );
+        return unmodifiableList(attendees);
     }
 
-    public void addAttendeeToEvent( AttendeeId attendeeId, String email, String firstname, String lastname ) {
-
-        if(isGatheringFinished) {
-            apply( new AttendeeGatheringAlreadyClosedEvent( eventId ) );
+    public void addAttendeeToEvent(AttendeeId attendeeId, String email, String firstName, String lastName) {
+        if (isGatheringFinished) {
+            apply(new AttendeeGatheringAlreadyClosedEvent(id));
             return;
         }
 
-        if( isAttendeeAlreadySignedForEvent( attendeeId ) ) {
-            apply( new AttendeeAlreadySignedForEvent( attendeeId, this.eventId ));
+        if (isAttendeeAlreadySignedForEvent(attendeeId)) {
+            apply(new AttendeeAlreadySignedForEvent(attendeeId, this.id));
             return;
         }
 
-        if( attendees.size() >= maxAttendeesCount ) {
-            apply( new MaxAttendeeCountExceededEvent( this.eventId, maxAttendeesCount ));
+        if (attendees.size() >= maxAttendeesCount) {
+            apply(new MaxAttendeeCountExceededEvent(this.id, maxAttendeesCount));
             return;
         }
 
-        if( !AttendeeFactory.isEmailAddressValid( email )) {
-            apply( new EmailAddressInvalidEvent( email, attendeeId ));
-            return;
+        Attendee attendee = null;
+        try {
+            attendee = AttendeeFactory.create(attendeeId, email, firstName, lastName);
+            apply(new AttendeeAddedEvent(id(), attendee));
+        } catch (IllegalArgumentException | NullPointerException ex) {
+            apply(new InvalidAttendeeGivenEvent(id(), attendee));
         }
-
-        apply( new AttendeeAddedEvent( this.eventId, attendeeId, email, firstname, lastname ));
     }
 
-    public void finishAttendeeGathering( ) {
-        if(isGatheringFinished) {
-            apply( new AttendeeGatheringAlreadyClosedEvent( eventId ) );
+    public void finishAttendeeGathering() {
+        if (isGatheringFinished) {
+            apply(new AttendeeGatheringAlreadyClosedEvent(id));
             return;
         }
-        apply( new AttendeeListClosedEvent( eventId ));
+        apply(new AttendeeListClosedEvent(id));
     }
 
-    private boolean isAttendeeAlreadySignedForEvent( AttendeeId attendeeId ) {
-
-        return attendees.stream().filter( attendee -> attendee.getId().equals( attendeeId ))
+    private boolean isAttendeeAlreadySignedForEvent(AttendeeId attendeeId) {
+        return attendees.stream().filter(attendee -> attendee.attendeeId().equals(attendeeId))
                 .findAny()
                 .isPresent();
     }
 
     @EventSourcingHandler
-    public void on( EventCreatedEvent event ) {
-        this.eventId = event.eventId;
+    public void on(EventCreatedEvent event) {
+        this.id = event.eventId;
         this.name = event.name;
         this.maxAttendeesCount = event.maxAttendeesCount;
     }
 
     @EventSourcingHandler
-    public void on( AttendeeAddedEvent event ) {
-        Attendee attendee = AttendeeFactory.create(event.attendeeId, event.email, event.firstname, event.lastname);
-        attendees.add( attendee );
+    public void on(AttendeeAddedEvent event) {
+        attendees.add(event.attendee());
     }
 
     @EventSourcingHandler
-    public void on( AttendeeListClosedEvent event ) {
+    public void on(AttendeeListClosedEvent event) {
         this.isGatheringFinished = true;
     }
 }

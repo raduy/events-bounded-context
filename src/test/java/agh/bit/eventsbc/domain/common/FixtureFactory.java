@@ -63,11 +63,11 @@ public class FixtureFactory {
         return fixture;
     }
 
-    public static FixtureConfiguration onEventPreconfiguredFixture( ) {
-        FixtureConfiguration fixture = Fixtures.newGivenWhenThenFixture( Event.class );
-        EventCommandHandler commandHandler = new EventCommandHandler( );
-        commandHandler.setEventRepository( fixture.getRepository( ) );
-        fixture.registerAnnotatedCommandHandler( commandHandler );
+    public static FixtureConfiguration onEventPreconfiguredFixture() {
+        FixtureConfiguration fixture = Fixtures.newGivenWhenThenFixture(Event.class);
+        EventCommandHandler commandHandler = new EventCommandHandler();
+        commandHandler.setEventRepository(fixture.getRepository());
+        fixture.registerAnnotatedCommandHandler(commandHandler);
         return fixture;
     }
 }
