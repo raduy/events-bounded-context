@@ -24,7 +24,7 @@ public class TemplateBuilder {
         return this;
     }
 
-    public TemplateBuilder withDescriptions(String ... descriptions) {
+    public TemplateBuilder withDescriptions(String... descriptions) {
         this.descriptions = Arrays.asList(descriptions);
         return this;
     }

@@ -7,13 +7,14 @@ import lombok.experimental.Accessors;
 
 @Value
 @Accessors(fluent = true)
-public class AttendeeAddedEvent {
+public class InvalidAttendeeGivenEvent {
 
     private final EventId eventId;
     private final Attendee attendee;
 
-    public AttendeeAddedEvent(EventId id, Attendee attendee) {
-        this.eventId = id;
+
+    public InvalidAttendeeGivenEvent(EventId eventId, Attendee attendee) {
+        this.eventId = eventId;
         this.attendee = attendee;
     }
 }

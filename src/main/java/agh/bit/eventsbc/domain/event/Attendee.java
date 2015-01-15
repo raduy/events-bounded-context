@@ -1,52 +1,35 @@
 package agh.bit.eventsbc.domain.event;
 
 import agh.bit.eventsbc.domain.event.valueobjects.AttendeeId;
+import com.google.common.base.Preconditions;
+import groovy.transform.EqualsAndHashCode;
+import lombok.Value;
+import lombok.experimental.Accessors;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 
+import static java.lang.String.format;
+
+@Value
+@Accessors(fluent = true)
+@EqualsAndHashCode(callSuper = false)
 public class Attendee extends AbstractAnnotatedEntity {
 
     private AttendeeId attendeeId;
     private String email;
-    private String firstname;
-    private String lastname;
+    private String firstName;
+    private String lastName;
 
-    public Attendee(AttendeeId attendeeId, String email, String firstname, String lastname) {
+    public Attendee(AttendeeId attendeeId, String email, String firstName, String lastName) {
+        Preconditions.checkNotNull(firstName);
+        Preconditions.checkNotNull(lastName);
+
+        boolean isEmailValid = EmailValidator.getInstance().isValid(email);
+        Preconditions.checkArgument(isEmailValid, format("Incorrect email for user: %s %s", firstName, lastName));
+
         this.attendeeId = attendeeId;
         this.email = email;
-        this.firstname = firstname;
-        this.lastname = lastname;
-    }
-
-    public AttendeeId getId() {
-        return attendeeId;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Attendee attendee = (Attendee) o;
-
-        if (attendeeId != null ? !attendeeId.equals(attendee.attendeeId) : attendee.attendeeId != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        return attendeeId != null ? attendeeId.hashCode() : 0;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 }

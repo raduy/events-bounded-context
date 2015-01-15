@@ -15,33 +15,34 @@ public class EventCommandHandler {
     private Repository<Event> eventRepository;
 
     @CommandHandler
-    public void handle( CreateEventCommand command ) {
+    public void handle(CreateEventCommand command) {
         Event event = EventFactory.create(
                 command.eventId,
                 command.name,
-                command.maxAttendeesCount );
-        eventRepository.add( event );
+                command.maxAttendeesCount);
+        eventRepository.add(event);
     }
 
     @CommandHandler
-    public void handle( SignForEventCommand command ) {
-        Event event = eventRepository.load( command.eventId );
+    public void handle(SignForEventCommand command) {
+        Event event = eventRepository.load(command.eventId);
+
         event.addAttendeeToEvent(
                 command.attendeeId,
                 command.email,
-                command.firstname,
-                command.lastname );
+                command.firstName,
+                command.lastName);
     }
 
     @CommandHandler
-    public void handle( FinishAttendeeGatheringCommand command ) {
-        Event event = eventRepository.load( command.eventId );
-        event.finishAttendeeGathering( );
+    public void handle(FinishAttendeeGatheringCommand command) {
+        Event event = eventRepository.load(command.eventId);
+        event.finishAttendeeGathering();
     }
 
     @Autowired
-    @Qualifier( "eventRepository" )
-    public void setEventRepository( Repository<Event> eventRepository ) {
+    @Qualifier("eventRepository")
+    public void setEventRepository(Repository<Event> eventRepository) {
         this.eventRepository = eventRepository;
     }
 }

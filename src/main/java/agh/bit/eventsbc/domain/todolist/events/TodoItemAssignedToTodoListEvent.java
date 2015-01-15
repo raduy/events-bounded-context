@@ -20,4 +20,10 @@ public class TodoItemAssignedToTodoListEvent {
     private final String description;
     private final LocalDate createdAt;
 
+    public TodoItemAssignedToTodoListEvent(TodoListId todoListId, TodoItemId todoItemId, String description, LocalDate createdAt) {
+        this.todoListId = todoListId;
+        this.todoItemId = todoItemId;
+        this.description = description;
+        this.createdAt = createdAt;
+    }
 }

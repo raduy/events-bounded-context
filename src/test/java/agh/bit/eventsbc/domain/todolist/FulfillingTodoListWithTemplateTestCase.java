@@ -39,7 +39,7 @@ public class FulfillingTodoListWithTemplateTestCase {
             TodoItemId.of("123"),
             TodoItemId.of("321")
     );
-    private final String[] todoItemDescriptions = new String[] {"todoitem1", "todoitem2"};
+    private final String[] todoItemDescriptions = new String[]{"todoitem1", "todoitem2"};
 
     private final TodoListId todoListId = TodoListId.of("id");
     private final LocalDate now = LocalDate.now();
@@ -96,12 +96,12 @@ public class FulfillingTodoListWithTemplateTestCase {
                 .given(
                         new TodoListCreatedEvent(todoListId),
                         new TodoItemAssignedToTodoListEvent(
-                            todoListId,
-                            TodoItemId.of("id"),
-                            "Todo Item",
-                            LocalDate.of(2010, 5, 5)
+                                todoListId,
+                                TodoItemId.of("id"),
+                                "Todo Item",
+                                LocalDate.of(2010, 5, 5)
                         )
-        )
+                )
                 .when(
                         new FulfillTodoListWithTemplateCommand(
                                 todoListId,

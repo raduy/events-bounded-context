@@ -9,7 +9,7 @@ public class CreateEventCommand {
     public final String name;
     public final int maxAttendeesCount;
 
-    public CreateEventCommand( EventId eventId, String name, int maxAttendeesCount ) {
+    public CreateEventCommand(EventId eventId, String name, int maxAttendeesCount) {
         this.eventId = eventId;
         this.name = name;
         this.maxAttendeesCount = maxAttendeesCount;

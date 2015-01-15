@@ -3,12 +3,12 @@ package agh.bit.eventsbc.domain.event.valueobjects;
 public class AttendeeId {
     public final Long id;
 
-    public AttendeeId( Long id ) {
+    public AttendeeId(Long id) {
         this.id = id;
     }
 
-    public static AttendeeId valueOf( Long id ) {
-        return new AttendeeId( id );
+    public static AttendeeId valueOf(Long id) {
+        return new AttendeeId(id);
     }
 
     @Override

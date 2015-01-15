@@ -4,13 +4,13 @@ import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
 public class InterestThresholdTest {
-    
+
     private final InterestThreshold objectUnderTest =
             InterestThreshold.of(16);
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowAnExceptionGivenNegativeNumber() throws Exception {
-        
+
         objectUnderTest.fulfilledWith(-5);
 
     }

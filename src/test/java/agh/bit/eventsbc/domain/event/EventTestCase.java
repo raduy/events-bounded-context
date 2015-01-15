@@ -4,99 +4,100 @@ import agh.bit.eventsbc.domain.event.commands.CreateEventCommand;
 import agh.bit.eventsbc.domain.event.commands.FinishAttendeeGatheringCommand;
 import agh.bit.eventsbc.domain.event.commands.SignForEventCommand;
 import agh.bit.eventsbc.domain.event.events.*;
+import agh.bit.eventsbc.domain.event.factories.AttendeeFactory;
 import agh.bit.eventsbc.domain.event.valueobjects.AttendeeId;
 import agh.bit.eventsbc.domain.event.valueobjects.EventId;
 import org.junit.Test;
 
 public class EventTestCase extends EventPreconfiguredTestCase {
-    private final EventId eventId = EventId.valueOf( 1L );
+    private final EventId eventId = EventId.valueOf(1L);
     private final String EVENT_NAME = "ddd-workshop";
     private final Integer MAX_ATTENDEES_COUNT = 10;
+    private Attendee attendee = AttendeeFactory.create(AttendeeId.valueOf(2L), "jan.kowalski@domain.com", "Jan", "Kowalski");
 
     @Test
-    public void thatCreateEventCommandCreatesNewEventAggregate( ) throws Exception {
+    public void thatCreateEventCommandCreatesNewEventAggregate() throws Exception {
         fixture
-                .given( )
+                .given()
                 .when(
-                        new CreateEventCommand( EventId.valueOf( 1L ), "Evt desc", 10 )
+                        new CreateEventCommand(EventId.valueOf(1L), "Evt desc", 10)
                 )
                 .expectEvents(
-                        new EventCreatedEvent( EventId.valueOf( 1L ), "Evt desc", 10 )
+                        new EventCreatedEvent(EventId.valueOf(1L), "Evt desc", 10)
                 );
     }
 
     @Test
-    public void thatSignForEventCommandAddsNewAttendeeToEventAggregate( ) throws Exception {
-        fixture
-                .given(
-                        new EventCreatedEvent( eventId, EVENT_NAME, MAX_ATTENDEES_COUNT )
-                )
-                .when(
-                        new SignForEventCommand( eventId, AttendeeId.valueOf(2L), "jan.kowalski@domain.com", "Jan", "Kowalski" )
-                )
-                .expectEvents(
-                        new AttendeeAddedEvent( eventId, AttendeeId.valueOf(2L), "jan.kowalski@domain.com", "Jan", "Kowalski" )
-                );
-    }
-
-    @Test
-    public void thatEventAggregateDoesNotAllowDuplicateAttendees( ) throws Exception {
+    public void thatSignForEventCommandAddsNewAttendeeToEventAggregate() throws Exception {
         fixture
                 .given(
-                        new EventCreatedEvent( eventId, EVENT_NAME, MAX_ATTENDEES_COUNT ),
-                        new AttendeeAddedEvent( eventId, AttendeeId.valueOf(2L), "jan.kowalski@domain.com", "Jan", "Kowalski" )
+                        new EventCreatedEvent(eventId, EVENT_NAME, MAX_ATTENDEES_COUNT)
                 )
                 .when(
-                        new SignForEventCommand( eventId, AttendeeId.valueOf(2L), "jan.kowalski@domain.com", "Jan", "Kowalski" )
+                        new SignForEventCommand(eventId, AttendeeId.valueOf(2L), "jan.kowalski@domain.com", "Jan", "Kowalski")
                 )
                 .expectEvents(
-                        new AttendeeAlreadySignedForEvent( AttendeeId.valueOf(2L), eventId )
+                        new AttendeeAddedEvent(eventId, attendee)
                 );
     }
 
     @Test
-    public void thatEventAggregateDoesNotAllowTooManyAttendees( ) throws Exception {
+    public void thatEventAggregateDoesNotAllowDuplicateAttendees() throws Exception {
         fixture
                 .given(
-                        new EventCreatedEvent( eventId, EVENT_NAME, 1),
-                        new AttendeeAddedEvent( eventId, AttendeeId.valueOf(2L), "jan.kowalski@domain.com", "Jan", "Kowalski" )
+                        new EventCreatedEvent(eventId, EVENT_NAME, MAX_ATTENDEES_COUNT),
+                        new AttendeeAddedEvent(eventId, attendee)
                 )
                 .when(
-                        new SignForEventCommand( eventId, AttendeeId.valueOf(3L), "anna.kowalska@domain.com", "Anna", "Kowalska" )
+                        new SignForEventCommand(eventId, AttendeeId.valueOf(2L), "jan.kowalski@domain.com", "Jan", "Kowalski")
                 )
                 .expectEvents(
-                        new MaxAttendeeCountExceededEvent( eventId, 1 )
+                        new AttendeeAlreadySignedForEvent(AttendeeId.valueOf(2L), eventId)
                 );
     }
 
     @Test
-    public void thatEventAggregateDoesNotAllowSigningAttendeesInAlreadyClosedEvent( ) throws Exception {
+    public void thatEventAggregateDoesNotAllowTooManyAttendees() throws Exception {
         fixture
                 .given(
-                        new EventCreatedEvent( eventId, EVENT_NAME, 1),
-                        new AttendeeListClosedEvent( eventId )
+                        new EventCreatedEvent(eventId, EVENT_NAME, 1),
+                        new AttendeeAddedEvent(eventId, attendee)
                 )
                 .when(
-                        new SignForEventCommand( eventId, AttendeeId.valueOf(3L), "anna.kowalska@domain.com", "Anna", "Kowalska" )
+                        new SignForEventCommand(eventId, AttendeeId.valueOf(4L), "anna.kowalska@domain.com", "Anna", "Kowalska")
                 )
                 .expectEvents(
-                        new AttendeeGatheringAlreadyClosedEvent( eventId )
+                        new MaxAttendeeCountExceededEvent(eventId, 1)
                 );
     }
 
     @Test
-    public void thatFinishAttendeeGatheringCommandFinishesGatheringIfPossible( ) throws Exception {
+    public void thatEventAggregateDoesNotAllowSigningAttendeesInAlreadyClosedEvent() throws Exception {
         fixture
                 .given(
-                        new EventCreatedEvent( eventId, EVENT_NAME, 1),
-                        new AttendeeAddedEvent( eventId, AttendeeId.valueOf(2L), "jan.kowalski@domain.com", "Jan", "Kowalski" )
+                        new EventCreatedEvent(eventId, EVENT_NAME, 1),
+                        new AttendeeListClosedEvent(eventId)
                 )
                 .when(
-                        new FinishAttendeeGatheringCommand( eventId )
+                        new SignForEventCommand(eventId, AttendeeId.valueOf(3L), "anna.kowalska@domain.com", "Anna", "Kowalska")
                 )
                 .expectEvents(
-                        new AttendeeListClosedEvent( eventId )
+                        new AttendeeGatheringAlreadyClosedEvent(eventId)
                 );
     }
 
+    @Test
+    public void thatFinishAttendeeGatheringCommandFinishesGatheringIfPossible() throws Exception {
+        fixture
+                .given(
+                        new EventCreatedEvent(eventId, EVENT_NAME, 1),
+                        new AttendeeAddedEvent(eventId, attendee)
+                )
+                .when(
+                        new FinishAttendeeGatheringCommand(eventId)
+                )
+                .expectEvents(
+                        new AttendeeListClosedEvent(eventId)
+                );
+    }
 }

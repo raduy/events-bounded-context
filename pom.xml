@@ -10,6 +10,11 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <gmaven.version>1.4</gmaven.version>
+        <gmaven.provider.selection>2.0</gmaven.provider.selection>
+        <groovy.version>2.0.0</groovy.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
     <build>
@@ -23,10 +28,56 @@
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
+
+            <!--Groovy-->
+            <plugin>
+                <groupId>org.codehaus.gmaven</groupId>
+                <artifactId>gmaven-plugin</artifactId>
+                <version>${gmaven.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generateStubs</goal>
+                            <goal>compile</goal>
+                            <goal>generateTestStubs</goal>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <providerSelection>1.8</providerSelection>
+                    <source/>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.codehaus.gmaven.runtime</groupId>
+                        <artifactId>gmaven-runtime-1.8</artifactId>
+                        <version>1.4</version>
+                        <exclusions>
+                            <exclusion>
+                                <groupId>org.codehaus.groovy</groupId>
+                                <artifactId>groovy-all</artifactId>
+                            </exclusion>
+                        </exclusions>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.codehaus.groovy</groupId>
+                        <artifactId>groovy-all</artifactId>
+                        <version>${groovy.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.fusesource.jansi</groupId>
+                        <artifactId>jansi</artifactId>
+                        <version>1.9</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
         </plugins>
     </build>
 
     <dependencies>
+
+        <!--Axon framework-->
         <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-core</artifactId>
@@ -37,11 +88,16 @@
             <artifactId>axon-test</artifactId>
             <version>2.3</version>
         </dependency>
+
+
+        <!--Other libs needs it-->
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.0-api</artifactId>
             <version>1.0.1.Final</version>
         </dependency>
+
+        <!--Testing-->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -61,15 +117,33 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.spockframework</groupId>
+            <artifactId>spock-maven</artifactId>
+            <version>0.7-groovy-2.0</version>
+        </dependency>
+
+
+        <!--Logger-->
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>1.7.7</version>
         </dependency>
+
+        <!--Third-party java libs-->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>18.0</version>
         </dependency>
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>1.4.0</version>
+        </dependency>
+
+
+        <!--Spring - Not in use-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
@@ -87,15 +161,12 @@
             <version>4.0.6.RELEASE</version>
         </dependency>
 
+
+        <!--Lombok-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.14.8</version>
         </dependency>
-
-
     </dependencies>
-
-    
-
 </project>
