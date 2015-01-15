@@ -12,9 +12,4 @@ public class InvalidAttendeeGivenEvent {
     private final EventId eventId;
     private final Attendee attendee;
 
-
-    public InvalidAttendeeGivenEvent(EventId eventId, Attendee attendee) {
-        this.eventId = eventId;
-        this.attendee = attendee;
-    }
 }

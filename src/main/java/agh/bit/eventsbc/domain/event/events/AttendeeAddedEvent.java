@@ -12,8 +12,4 @@ public class AttendeeAddedEvent {
     private final EventId eventId;
     private final Attendee attendee;
 
-    public AttendeeAddedEvent(EventId id, Attendee attendee) {
-        this.eventId = id;
-        this.attendee = attendee;
-    }
 }
