@@ -8,7 +8,7 @@ import lombok.experimental.Accessors;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 
-import static java.lang.String.*;
+import static java.lang.String.format;
 
 @Value
 @Accessors(fluent = true)
