@@ -3,6 +3,7 @@ package agh.bit.eventsbc.infrastructure;
 import agh.bit.eventsbc.domain.eventproposal.factories.TodoItemIdProvider;
 import agh.bit.eventsbc.domain.todolist.valueobjects.TodoItemId;
 import com.google.common.base.Preconditions;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.UUID;
@@ -12,6 +13,7 @@ import java.util.stream.IntStream;
 /**
  * Created by novy on 06.01.15.
  */
+@Component
 public class TodoItemIdProviderImpl implements TodoItemIdProvider {
 
     private static final String ERROR_MESSAGE = "Requested id batch of negative size";
