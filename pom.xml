@@ -120,6 +120,12 @@
             <groupId>org.spockframework</groupId>
             <artifactId>spock-maven</artifactId>
             <version>0.7-groovy-2.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.maven.surefire</groupId>
+                    <artifactId>surefire-junit47</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
 
