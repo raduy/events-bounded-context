@@ -2,7 +2,6 @@ package agh.bit.eventsbc.domain.event;
 
 import agh.bit.eventsbc.domain.event.valueobjects.AttendeeId;
 import com.google.common.base.Preconditions;
-import groovy.transform.EqualsAndHashCode;
 import lombok.Value;
 import lombok.experimental.Accessors;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -10,9 +9,9 @@ import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 
 import static java.lang.String.format;
 
+//todo: make it value object completely?
 @Value
 @Accessors(fluent = true)
-@EqualsAndHashCode(callSuper = false)
 public class Attendee extends AbstractAnnotatedEntity {
 
     private AttendeeId attendeeId;
