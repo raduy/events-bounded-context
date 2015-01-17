@@ -11,6 +11,11 @@ public class AttendeeFactory {
         return new Attendee(attendeeId, email, firstName, lastName);
     }
 
+    public static Attendee create(String email, String firstName, String lastName) {
+        AttendeeId attendeeId = new AttendeeId();
+        return new Attendee(attendeeId, email, firstName, lastName);
+    }
+
     public static Attendee create(SignForEventCommand command) {
         return new Attendee(command.attendeeId, command.email, command.firstName, command.lastName);
     }

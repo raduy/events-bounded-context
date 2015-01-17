@@ -11,21 +11,22 @@ import agh.bit.eventsbc.domain.event.valueobjects.EventId;
 import org.junit.Test;
 
 public class EventTestCase extends EventPreconfiguredTestCase {
-    private final EventId eventId = EventId.valueOf(1L);
+    private final EventId eventId = new EventId();
     private final String EVENT_NAME = "ddd-workshop";
     private final Integer MAX_ATTENDEES_COUNT = 10;
-    private final AttendeeId attendeeId = new AttendeeId();
-    private Attendee attendee = AttendeeFactory.create(attendeeId, "jan.kowalski@domain.com", "Jan", "Kowalski");
+
+    private final Attendee attendee = AttendeeFactory.create("jan.kowalski@domain.com", "Jan", "Kowalski");
+    private final AttendeeId attendeeId = attendee.id();
 
     @Test
     public void thatCreateEventCommandCreatesNewEventAggregate() throws Exception {
         fixture
                 .given()
                 .when(
-                        new CreateEventCommand(EventId.valueOf(1L), "Evt desc", 10)
+                        new CreateEventCommand(eventId, "Evt desc", MAX_ATTENDEES_COUNT)
                 )
                 .expectEvents(
-                        new EventCreatedEvent(EventId.valueOf(1L), "Evt desc", 10)
+                        new EventCreatedEvent(eventId, "Evt desc", MAX_ATTENDEES_COUNT)
                 );
     }
 
@@ -60,24 +61,26 @@ public class EventTestCase extends EventPreconfiguredTestCase {
 
     @Test
     public void thatEventAggregateDoesNotAllowTooManyAttendees() throws Exception {
+        int MAX_ATTENDEES_COUNT = 1;
         fixture
                 .given(
-                        new EventCreatedEvent(eventId, EVENT_NAME, 1),
+                        new EventCreatedEvent(eventId, EVENT_NAME, MAX_ATTENDEES_COUNT),
                         new AttendeeAddedEvent(eventId, attendee)
                 )
                 .when(
                         new SignForEventCommand(eventId, new AttendeeId(), "anna.kowalska@domain.com", "Anna", "Kowalska")
                 )
                 .expectEvents(
-                        new MaxAttendeeCountExceededEvent(eventId, 1)
+                        new MaxAttendeeCountExceededEvent(eventId, MAX_ATTENDEES_COUNT)
                 );
     }
 
     @Test
     public void thatEventAggregateDoesNotAllowSigningAttendeesInAlreadyClosedEvent() throws Exception {
+        final int MAX_ATTENDEES_COUNT = 1;
         fixture
                 .given(
-                        new EventCreatedEvent(eventId, EVENT_NAME, 1),
+                        new EventCreatedEvent(eventId, EVENT_NAME, MAX_ATTENDEES_COUNT),
                         new AttendeeListClosedEvent(eventId)
                 )
                 .when(
@@ -90,9 +93,10 @@ public class EventTestCase extends EventPreconfiguredTestCase {
 
     @Test
     public void thatFinishAttendeeGatheringCommandFinishesGatheringIfPossible() throws Exception {
+        int MAX_ATTENDEES_COUNT = 1;
         fixture
                 .given(
-                        new EventCreatedEvent(eventId, EVENT_NAME, 1),
+                        new EventCreatedEvent(eventId, EVENT_NAME, MAX_ATTENDEES_COUNT),
                         new AttendeeAddedEvent(eventId, attendee)
                 )
                 .when(
