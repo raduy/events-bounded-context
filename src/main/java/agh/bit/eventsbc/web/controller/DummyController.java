@@ -34,7 +34,7 @@ public class DummyController {
     @RequestMapping(value = "/eventproposal", method = RequestMethod.GET)
     public void createEventProposal() {
         CreateEventProposalCommand command = new CreateEventProposalCommand(
-                EventProposalId.of("1"),
+                new EventProposalId("1"),
                 "Test",
                 EventDescription.of("test desc"),
                 12);
@@ -45,7 +45,7 @@ public class DummyController {
     @RequestMapping(value = "/eventproposal/{id}", method = RequestMethod.GET)
     public EventProposalId loadEventProposal(@PathVariable("id") String id) {
         UnitOfWork uow = DefaultUnitOfWork.startAndGet();
-        EventProposal eventProposal = eventProposalRepository.load(EventProposalId.of(id));
+        EventProposal eventProposal = eventProposalRepository.load(new EventProposalId(id));
         EventProposalId proposalId = (EventProposalId) eventProposal.getIdentifier();
         uow.commit();
         return proposalId;

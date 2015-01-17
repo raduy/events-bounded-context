@@ -10,9 +10,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static java.lang.String.format;
 
 //todo: make it value object completely?
-@Value
 @Accessors(fluent = true)
-@EqualsAndHashCode(callSuper = false)
 public class Attendee extends IdentifiedDomainEntity<AttendeeId> {
 
     private String email;
