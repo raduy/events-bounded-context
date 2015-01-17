@@ -6,9 +6,9 @@ import agh.bit.eventsbc.domain.eventproposalrequest.valueobjects.EventProposalRe
 public class EventProposalRequestFactory {
 
     public static EventProposalRequest create(EventProposalRequestId id,
-                                       String name,
-                                       String description,
-                                       String author) {
+                                              String name,
+                                              String description,
+                                              String author) {
 
         return new EventProposalRequest(id, name, description, author);
 

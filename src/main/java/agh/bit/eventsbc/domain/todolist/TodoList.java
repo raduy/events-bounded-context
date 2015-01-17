@@ -38,10 +38,7 @@ public class TodoList extends IdentifiedDomainAggregateRoot<TodoListId> {
     public void assignTodoItem(TodoItemId todoItemId, String content, LocalDate creationDate) {
 
         if (alreadyHasTodoItemWith(todoItemId)) {
-            apply(new TodoItemNotAssignedToTodoList(
-                            id, todoItemId)
-            );
-
+            apply(new TodoItemNotAssignedToTodoListEvent(id, todoItemId));
             return;
         }
 
@@ -93,12 +90,7 @@ public class TodoList extends IdentifiedDomainAggregateRoot<TodoListId> {
 
     public void fulfillWith(TodoListTemplate todoListTemplate, LocalDate creationDate, TodoItemIdProvider provider) {
         if (alreadyHasAnyTodoItem()) {
-            apply(new TodoListNotFulfilledWithTemplateEvent(
-                            id,
-                            todoListTemplate.id()
-                    )
-            );
-
+            apply(new TodoListNotFulfilledWithTemplateEvent(id, todoListTemplate.id()));
             return;
         }
 
@@ -117,7 +109,7 @@ public class TodoList extends IdentifiedDomainAggregateRoot<TodoListId> {
     @EventSourcingHandler
     public void on(TodoListFulfilledWithTemplateEvent event) {
         todoItems.addAll(
-            fromDescriptions(event.todoItemIds(), event.todoItemDescriptions(), event.fulfilledAt())
+                fromDescriptions(event.todoItemIds(), event.todoItemDescriptions(), event.fulfilledAt())
         );
     }
 

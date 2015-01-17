@@ -4,14 +4,12 @@ import agh.bit.eventsbc.domain.todolist.builders.AssignTodoItemToTodoListCommand
 import agh.bit.eventsbc.domain.todolist.builders.TodoItemAssignedToTodoListEventBuilder;
 import agh.bit.eventsbc.domain.todolist.commands.AssignTodoItemToTodoListCommand;
 import agh.bit.eventsbc.domain.todolist.events.TodoItemAssignedToTodoListEvent;
-import agh.bit.eventsbc.domain.todolist.events.TodoItemNotAssignedToTodoList;
+import agh.bit.eventsbc.domain.todolist.events.TodoItemNotAssignedToTodoListEvent;
 import agh.bit.eventsbc.domain.todolist.events.TodoListCreatedEvent;
 import agh.bit.eventsbc.domain.todolist.valueobjects.TodoItemId;
 import agh.bit.eventsbc.domain.todolist.valueobjects.TodoListId;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.time.LocalDate;
 
 /**
  * Created by novy on 04.01.15.
@@ -19,8 +17,8 @@ import java.time.LocalDate;
 public class AssigningTodoItemToTodoListTestCase
         extends TodoListPreconfiguredTestCase {
 
-    private final TodoListId todoListId = TodoListId.of("dummy id");
-    private final TodoItemId todoItemId = TodoItemId.of("123");
+    private final TodoListId todoListId = new TodoListId();
+    private final TodoItemId todoItemId = new TodoItemId();
 
     private TodoListCreatedEvent todoListCreatedEvent;
     private AssignTodoItemToTodoListCommand assignTodoItemToTodoListCommand;
@@ -50,7 +48,6 @@ public class AssigningTodoItemToTodoListTestCase
 
     @Test
     public void assignTodoItemToTodoListShouldCreateNewTodoItem() throws Exception {
-
         fixture
                 .given(todoListCreatedEvent)
                 .when(assignTodoItemToTodoListCommand)
@@ -60,6 +57,8 @@ public class AssigningTodoItemToTodoListTestCase
 
     @Test
     public void assigningTodoItemWithSameIdTwiceShouldFail() throws Exception {
+        TodoItemNotAssignedToTodoListEvent todoItemNotAssignedToTodoListEvent =
+                new TodoItemNotAssignedToTodoListEvent(todoListId, todoItemId);
 
         fixture
                 .given(
@@ -69,10 +68,7 @@ public class AssigningTodoItemToTodoListTestCase
                 )
                 .when(assignTodoItemToTodoListCommand)
                 .expectEvents(
-                        new TodoItemNotAssignedToTodoList(
-                                todoListId, todoItemId
-                        )
+                        todoItemNotAssignedToTodoListEvent
                 );
-
     }
 }

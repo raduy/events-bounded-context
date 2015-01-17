@@ -16,8 +16,8 @@ import org.junit.Test;
 public class AssigningTodoListToItemProposalTestCase
         extends EventProposalPreconfiguredTestCase {
 
-    private final EventProposalId eventProposalId = EventProposalId.of("1234");
-    private final TodoListId todoListId = TodoListId.of("666");
+    private final EventProposalId eventProposalId = new EventProposalId();
+    private final TodoListId todoListId = new TodoListId();
 
     private EventProposalCreatedEvent eventProposalCreatedEvent;
 
@@ -56,13 +56,13 @@ public class AssigningTodoListToItemProposalTestCase
     @Test
     public void invokingAssignTodoListToEventProposalCommandOnSameAggregateTwiceShouldFail()
             throws Exception {
-        final EventProposalId eventProposalId = EventProposalId.of("1234");
-        final TodoListId firstTodoListId = TodoListId.of("666");
-        final TodoListId secondTodoListId = TodoListId.of("333");
+        final TodoListId firstTodoListId = new TodoListId();
+        final TodoListId secondTodoListId = new TodoListId();
 
         fixture
                 .given(
                         eventProposalCreatedEvent,
+
                         new TodoListAssignedToEventProposalEvent(
                                 eventProposalId,
                                 firstTodoListId

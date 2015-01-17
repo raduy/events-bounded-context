@@ -1,15 +1,18 @@
 package agh.bit.eventsbc.domain.todolist.valueobjects;
 
-import agh.bit.eventsbc.domain.common.DomainIdentifier;
-import lombok.Value;
+import agh.bit.eventsbc.domain.common.UUIDBasedId;
 
 /**
  * Created by novy handle 03.01.15.
  */
 
-@Value(staticConstructor = "of")
-public class TodoListId implements DomainIdentifier {
+public class TodoListId extends UUIDBasedId {
 
-    private final String id;
+    public TodoListId() {
+    }
 
+    public TodoListId(String id) {
+        super(id);
+    }
 }
+

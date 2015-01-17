@@ -19,7 +19,8 @@ public class TodoListTemplate extends IdentifiedDomainAggregateRoot<TodoListTemp
 
     private List<TodoItemTemplate> todoItemTemplates = Lists.newArrayList();
 
-    private TodoListTemplate() {}
+    private TodoListTemplate() {
+    }
 
     public TodoListTemplate(TodoListTemplateId id, List<String> todoItemDescriptions) {
         apply(new TodoListTemplateCreatedEvent(id, todoItemDescriptions));

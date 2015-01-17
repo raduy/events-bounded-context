@@ -1,6 +1,7 @@
 package agh.bit.eventsbc.domain.event
 
-import agh.bit.eventsbc.domain.event.valueobjects.AttendeeId
+import agh.bit.eventsbc.domain.attendee.Attendee
+import agh.bit.eventsbc.domain.attendee.AttendeeId
 import spock.lang.Specification
 
 /**
@@ -8,7 +9,7 @@ import spock.lang.Specification
  */
 class AttendeeTest extends Specification {
 
-    def sampleId = new AttendeeId(123L)
+    def sampleId = new AttendeeId()
     def validEmail = "silver.surfer@gmail.com"
     def sampleFirstName = "Silver"
     def sampleSecondName = "Surfer"

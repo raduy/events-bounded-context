@@ -1,8 +1,8 @@
 package agh.bit.eventsbc.domain.eventproposal.builders;
 
-import agh.bit.eventsbc.domain.eventproposal.events.MemberSignedInterestEvent;
+import agh.bit.eventsbc.domain.attendee.AttendeeId;
+import agh.bit.eventsbc.domain.eventproposal.events.AttendeeSignedInterestEvent;
 import agh.bit.eventsbc.domain.eventproposal.valueobjects.EventProposalId;
-import agh.bit.eventsbc.domain.eventproposal.valueobjects.MemberId;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -16,13 +16,14 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor(staticName = "newSignedInterestEvent")
 public class MemberSignedInterestEventBuilder {
 
-    private EventProposalId eventProposalId = EventProposalId.of("123");
-    private MemberId memberId = MemberId.of("123");
+    private EventProposalId eventProposalId = new EventProposalId();
+    private AttendeeId attendeeId = new AttendeeId();
+
     private String firstName = "default first name";
     private String lastName = "default last name";
     private String email = "default.email@gmail.com";
 
-    public MemberSignedInterestEvent build() {
-        return new MemberSignedInterestEvent(eventProposalId, memberId, firstName, lastName, email);
+    public AttendeeSignedInterestEvent build() {
+        return new AttendeeSignedInterestEvent(eventProposalId, attendeeId, firstName, lastName, email);
     }
 }

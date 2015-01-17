@@ -18,7 +18,7 @@ import java.time.LocalDate;
 @NoArgsConstructor(staticName = "newFulfillTodoListWithTemplateCommand")
 public class FulfillTodoListWithTemplateCommandBuilder {
 
-    private TodoListId todoListId = TodoListId.of("123");
+    private TodoListId todoListId = new TodoListId();
     private TodoListTemplateId todoListTemplateId = TodoListTemplateId.of("123");
     private LocalDate creationDate = LocalDate.of(2010, 1, 1);
 

@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 
 @Value
 @Accessors(fluent = true)
-public class TodoItemNotAssignedToTodoList {
+public class TodoItemNotAssignedToTodoListEvent {
 
     private final TodoListId todoListId;
     private final TodoItemId todoItemId;

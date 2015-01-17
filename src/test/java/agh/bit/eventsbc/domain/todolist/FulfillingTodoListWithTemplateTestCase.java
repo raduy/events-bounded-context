@@ -36,12 +36,12 @@ public class FulfillingTodoListWithTemplateTestCase {
 
     private final TodoListTemplateId todoListTemplateId = TodoListTemplateId.of("id");
     private final List<TodoItemId> todoItemIds = ImmutableList.of(
-            TodoItemId.of("123"),
-            TodoItemId.of("321")
+            new TodoItemId(),
+            new TodoItemId()
     );
     private final String[] todoItemDescriptions = new String[]{"todoitem1", "todoitem2"};
 
-    private final TodoListId todoListId = TodoListId.of("id");
+    private final TodoListId todoListId = new TodoListId();
     private final LocalDate now = LocalDate.now();
 
     @Before
@@ -89,7 +89,7 @@ public class FulfillingTodoListWithTemplateTestCase {
 
     @Test
     public void shouldNotTodoItemBeFilledGivenNonEmptyTodoList() throws Exception {
-        final TodoListId todoListId = TodoListId.of("id");
+        final TodoListId todoListId = new TodoListId();
         final LocalDate now = LocalDate.now();
 
         fixture
@@ -97,7 +97,7 @@ public class FulfillingTodoListWithTemplateTestCase {
                         new TodoListCreatedEvent(todoListId),
                         new TodoItemAssignedToTodoListEvent(
                                 todoListId,
-                                TodoItemId.of("id"),
+                                new TodoItemId(),
                                 "Todo Item",
                                 LocalDate.of(2010, 5, 5)
                         )

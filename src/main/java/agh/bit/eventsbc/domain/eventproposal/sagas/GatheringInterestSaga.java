@@ -1,7 +1,7 @@
 package agh.bit.eventsbc.domain.eventproposal.sagas;
 
+import agh.bit.eventsbc.domain.eventproposal.events.AttendeeSignedInterestEvent;
 import agh.bit.eventsbc.domain.eventproposal.events.EventProposalCreatedEvent;
-import agh.bit.eventsbc.domain.eventproposal.events.MemberSignedInterestEvent;
 import agh.bit.eventsbc.domain.eventproposal.events.MinimalInterestedSatisfiedEvent;
 import agh.bit.eventsbc.domain.eventproposal.valueobjects.InterestThreshold;
 import org.axonframework.commandhandling.gateway.CommandGateway;
@@ -40,7 +40,7 @@ public class GatheringInterestSaga extends AbstractAnnotatedSaga {
     }
 
     @SagaEventHandler(associationProperty = EVENT_PROPOSAL_ID_PROPERTY)
-    public void on(MemberSignedInterestEvent event) {
+    public void on(AttendeeSignedInterestEvent event) {
         interestedAttendees++;
         if (gatheringState == GatheringState.PENDING && interestThreshold.fulfilledWith(interestedAttendees)) {
             gatheringState = GatheringState.THRESHOLD_FULFILLED;

@@ -16,7 +16,7 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor(staticName = "newEventProposalCreatedEvent")
 public class EventProposalCreatedEventBuilder {
 
-    private EventProposalId eventProposalId = EventProposalId.of("default ID");
+    private EventProposalId eventProposalId = new EventProposalId();
     private String name = "default name";
     private EventDescription description = EventDescription.of("default description");
     private int minimalInterestThreshold = 15;
