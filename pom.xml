@@ -8,9 +8,16 @@
     <artifactId>eventsbc</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.2.1.RELEASE</version>
+    </parent>
+
     <properties>
         <java.version>1.8</java.version>
         <gmaven.version>1.4</gmaven.version>
+        <maven.surefire.version>2.8.1</maven.surefire.version>
         <gmaven.provider.selection>2.0</gmaven.provider.selection>
         <groovy.version>2.0.0</groovy.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -72,6 +79,18 @@
                     </dependency>
                 </dependencies>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.version}</version>
+                <configuration>
+                    <includes>
+                        <include>**/*Test*.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 
@@ -120,6 +139,12 @@
             <groupId>org.spockframework</groupId>
             <artifactId>spock-maven</artifactId>
             <version>0.7-groovy-2.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.maven.surefire</groupId>
+                    <artifactId>surefire-junit47</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
 
@@ -167,6 +192,13 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.14.8</version>
+        </dependency>
+
+        <!--this have to be repeated due to spring boot-->
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>${groovy.version}</version>
         </dependency>
     </dependencies>
 </project>

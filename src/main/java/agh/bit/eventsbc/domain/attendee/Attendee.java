@@ -2,7 +2,6 @@ package agh.bit.eventsbc.domain.attendee;
 
 import agh.bit.eventsbc.domain.common.IdentifiedDomainEntity;
 import com.google.common.base.Preconditions;
-import groovy.transform.EqualsAndHashCode;
 import lombok.Value;
 import lombok.experimental.Accessors;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -10,6 +9,7 @@ import org.apache.commons.validator.routines.EmailValidator;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static java.lang.String.format;
 
+//todo: make it value object completely?
 @Value
 @Accessors(fluent = true)
 @EqualsAndHashCode(callSuper = false)
