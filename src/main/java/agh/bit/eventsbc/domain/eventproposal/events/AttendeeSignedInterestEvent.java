@@ -1,7 +1,7 @@
 package agh.bit.eventsbc.domain.eventproposal.events;
 
+import agh.bit.eventsbc.domain.attendee.AttendeeId;
 import agh.bit.eventsbc.domain.eventproposal.valueobjects.EventProposalId;
-import agh.bit.eventsbc.domain.eventproposal.valueobjects.MemberId;
 import lombok.Value;
 import lombok.experimental.Accessors;
 
@@ -11,12 +11,11 @@ import lombok.experimental.Accessors;
 
 @Value
 @Accessors(fluent = true)
-public class MemberAlreadyInterestedInEventProposal {
+public class AttendeeSignedInterestEvent {
 
     private final EventProposalId eventProposalId;
-    private final MemberId memberId;
+    private final AttendeeId memberId;
     private final String firstName;
     private final String lastName;
     private final String email;
-
 }

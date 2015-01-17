@@ -1,15 +1,15 @@
 package agh.bit.eventsbc.domain.eventproposal;
 
+import agh.bit.eventsbc.domain.attendee.Attendee;
+import agh.bit.eventsbc.domain.attendee.AttendeeId;
 import agh.bit.eventsbc.domain.common.IdentifiedDomainAggregateRoot;
-import agh.bit.eventsbc.domain.eventproposal.entities.Student;
 import agh.bit.eventsbc.domain.eventproposal.events.*;
 import agh.bit.eventsbc.domain.eventproposal.valueobjects.EventDescription;
 import agh.bit.eventsbc.domain.eventproposal.valueobjects.EventProposalId;
-import agh.bit.eventsbc.domain.eventproposal.valueobjects.MemberId;
 import agh.bit.eventsbc.domain.todolist.valueobjects.TodoListId;
-import com.google.common.collect.Lists;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,7 +21,7 @@ public class EventProposal extends IdentifiedDomainAggregateRoot<EventProposalId
     private TodoListId todoListId;
     private EventDescription description;
     private int minimalInterestThreshold;
-    private List<Student> interestedStudents = Lists.newArrayList();
+    private List<Attendee> interestedStudents = new ArrayList<>();
 
     private EventProposal() {
     }
@@ -54,34 +54,24 @@ public class EventProposal extends IdentifiedDomainAggregateRoot<EventProposalId
         todoListId = event.todoListId();
     }
 
-    public void registerInterestedStudent(MemberId memberId, String firstName, String lastName, String email) {
-        if (studentAlreadyInterestedInEvent(memberId)) {
-            apply(new MemberAlreadyInterestedInEventProposal(
-                            id, memberId, firstName, lastName, email
-                    )
-            );
-
+    public void registerInterestedStudent(AttendeeId memberId, String firstName, String lastName, String email) {
+        if (attendeeAlreadyInterestedInEvent(memberId)) {
+            apply(new AttendeeAlreadyInterestedInEventProposalEvent(id, memberId, firstName, lastName, email));
             return;
         }
 
-        apply(new MemberSignedInterestEvent(
-                        id, memberId, firstName, lastName, email
-                )
-        );
-
-
+        apply(new AttendeeSignedInterestEvent(id, memberId, firstName, lastName, email));
     }
 
-    private boolean studentAlreadyInterestedInEvent(MemberId memberId) {
+    private boolean attendeeAlreadyInterestedInEvent(AttendeeId memberId) {
         return interestedStudents.stream()
                 .anyMatch(student -> student.matchesId(memberId));
     }
 
     @EventSourcingHandler
-    public void on(MemberSignedInterestEvent event) {
-        interestedStudents.add(
-                new Student(event.memberId(), event.firstName(), event.lastName(), event.email())
-        );
+    public void on(AttendeeSignedInterestEvent evt) {
+        Attendee attendee = new Attendee(evt.memberId(), evt.email(), evt.lastName(), evt.firstName());
+        interestedStudents.add(attendee);
     }
 
     private boolean alreadyHasTodoListAssigned() {

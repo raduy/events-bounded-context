@@ -1,6 +1,6 @@
 package agh.bit.eventsbc.domain.event.events;
 
-import agh.bit.eventsbc.domain.event.Attendee;
+import agh.bit.eventsbc.domain.attendee.Attendee;
 import agh.bit.eventsbc.domain.event.valueobjects.EventId;
 import lombok.Value;
 import lombok.experimental.Accessors;

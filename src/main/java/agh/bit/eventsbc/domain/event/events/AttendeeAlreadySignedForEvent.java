@@ -1,6 +1,6 @@
 package agh.bit.eventsbc.domain.event.events;
 
-import agh.bit.eventsbc.domain.event.valueobjects.AttendeeId;
+import agh.bit.eventsbc.domain.attendee.AttendeeId;
 import agh.bit.eventsbc.domain.event.valueobjects.EventId;
 
 public class AttendeeAlreadySignedForEvent {

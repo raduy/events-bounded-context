@@ -1,8 +1,8 @@
 package agh.bit.eventsbc.domain.eventproposal.builders;
 
+import agh.bit.eventsbc.domain.attendee.AttendeeId;
 import agh.bit.eventsbc.domain.eventproposal.commands.SignInterestCommand;
 import agh.bit.eventsbc.domain.eventproposal.valueobjects.EventProposalId;
-import agh.bit.eventsbc.domain.eventproposal.valueobjects.MemberId;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
 public class SignInterestCommandBuilder {
 
     private EventProposalId eventProposalId = EventProposalId.of("123");
-    private MemberId memberId = MemberId.of("321");
+    private AttendeeId attendeeId = new AttendeeId();
     private String firstName = "default firs name";
     private String lastName = "default last name";
     private String email = "default.email@gmail.com";
@@ -25,7 +25,7 @@ public class SignInterestCommandBuilder {
     public SignInterestCommand build() {
         return new SignInterestCommand(
                 eventProposalId,
-                memberId,
+                attendeeId,
                 firstName,
                 lastName,
                 email

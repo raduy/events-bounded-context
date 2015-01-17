@@ -1,8 +1,8 @@
 package agh.bit.eventsbc.domain.eventproposal.builders;
 
-import agh.bit.eventsbc.domain.eventproposal.events.MemberAlreadyInterestedInEventProposal;
+import agh.bit.eventsbc.domain.attendee.AttendeeId;
+import agh.bit.eventsbc.domain.eventproposal.events.AttendeeAlreadyInterestedInEventProposalEvent;
 import agh.bit.eventsbc.domain.eventproposal.valueobjects.EventProposalId;
-import agh.bit.eventsbc.domain.eventproposal.valueobjects.MemberId;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -17,15 +17,15 @@ import lombok.experimental.Accessors;
 public class MemberAlreadyInterestedInEventProposalEventBuilder {
 
     private EventProposalId eventProposalId = EventProposalId.of("123");
-    private MemberId memberId = MemberId.of("321");
+    private AttendeeId attendeeId = new AttendeeId();
     private String firstName = "default firs name";
     private String lastName = "default last name";
     private String email = "default.email@gmail.com";
 
-    public MemberAlreadyInterestedInEventProposal build() {
-        return new MemberAlreadyInterestedInEventProposal(
+    public AttendeeAlreadyInterestedInEventProposalEvent build() {
+        return new AttendeeAlreadyInterestedInEventProposalEvent(
                 eventProposalId,
-                memberId,
+                attendeeId,
                 firstName,
                 lastName,
                 email

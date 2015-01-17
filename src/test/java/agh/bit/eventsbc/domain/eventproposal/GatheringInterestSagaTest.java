@@ -1,11 +1,11 @@
 package agh.bit.eventsbc.domain.eventproposal;
 
+import agh.bit.eventsbc.domain.attendee.AttendeeId;
 import agh.bit.eventsbc.domain.eventproposal.builders.EventProposalCreatedEventBuilder;
 import agh.bit.eventsbc.domain.eventproposal.builders.MemberSignedInterestEventBuilder;
 import agh.bit.eventsbc.domain.eventproposal.events.MinimalInterestedSatisfiedEvent;
 import agh.bit.eventsbc.domain.eventproposal.sagas.GatheringInterestSaga;
 import agh.bit.eventsbc.domain.eventproposal.valueobjects.EventProposalId;
-import agh.bit.eventsbc.domain.eventproposal.valueobjects.MemberId;
 import org.axonframework.test.saga.AnnotatedSagaTestFixture;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,7 +41,7 @@ public class GatheringInterestSagaTest {
                         MemberSignedInterestEventBuilder
                                 .newSignedInterestEvent()
                                 .eventProposalId(eventProposalId)
-                                .memberId(MemberId.of("123"))
+                                .attendeeId(new AttendeeId())
                                 .build()
                 )
                 .whenAggregate(eventProposalId)
@@ -49,7 +49,7 @@ public class GatheringInterestSagaTest {
                         MemberSignedInterestEventBuilder
                                 .newSignedInterestEvent()
                                 .eventProposalId(eventProposalId)
-                                .memberId(MemberId.of("321"))
+                                .attendeeId(new AttendeeId())
                                 .build()
                 )
                 .expectPublishedEvents(
@@ -72,13 +72,13 @@ public class GatheringInterestSagaTest {
                         MemberSignedInterestEventBuilder
                                 .newSignedInterestEvent()
                                 .eventProposalId(eventProposalId)
-                                .memberId(MemberId.of("123"))
+                                .attendeeId(new AttendeeId())
                                 .build(),
 
                         MemberSignedInterestEventBuilder
                                 .newSignedInterestEvent()
                                 .eventProposalId(eventProposalId)
-                                .memberId(MemberId.of("321"))
+                                .attendeeId(new AttendeeId())
                                 .build()
                 )
                 .whenAggregate(eventProposalId)
@@ -86,7 +86,7 @@ public class GatheringInterestSagaTest {
                         MemberSignedInterestEventBuilder
                                 .newSignedInterestEvent()
                                 .eventProposalId(eventProposalId)
-                                .memberId(MemberId.of("666"))
+                                .attendeeId(new AttendeeId())
                                 .build()
                 )
                 .expectPublishedEvents();

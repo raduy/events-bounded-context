@@ -1,17 +1,14 @@
 package agh.bit.eventsbc.domain.eventproposal;
 
+import agh.bit.eventsbc.domain.attendee.AttendeeId;
 import agh.bit.eventsbc.domain.eventproposal.builders.EventProposalCreatedEventBuilder;
 import agh.bit.eventsbc.domain.eventproposal.builders.MemberAlreadyInterestedInEventProposalEventBuilder;
 import agh.bit.eventsbc.domain.eventproposal.builders.MemberSignedInterestEventBuilder;
 import agh.bit.eventsbc.domain.eventproposal.builders.SignInterestCommandBuilder;
 import agh.bit.eventsbc.domain.eventproposal.commands.SignInterestCommand;
+import agh.bit.eventsbc.domain.eventproposal.events.AttendeeSignedInterestEvent;
 import agh.bit.eventsbc.domain.eventproposal.events.EventProposalCreatedEvent;
-import agh.bit.eventsbc.domain.eventproposal.events.MemberAlreadyInterestedInEventProposal;
-import agh.bit.eventsbc.domain.eventproposal.events.MemberSignedInterestEvent;
-import agh.bit.eventsbc.domain.eventproposal.events.MinimalInterestedSatisfiedEvent;
-import agh.bit.eventsbc.domain.eventproposal.valueobjects.EventDescription;
 import agh.bit.eventsbc.domain.eventproposal.valueobjects.EventProposalId;
-import agh.bit.eventsbc.domain.eventproposal.valueobjects.MemberId;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,14 +20,14 @@ public class SigningInterestTestCase extends EventProposalPreconfiguredTestCase 
     private final EventProposalId eventProposalId = EventProposalId.of("132");
     private final int interestThreshold = 2;
 
-    private final MemberId firstMemberId = MemberId.of("666");
+    private final AttendeeId firstMemberId = new AttendeeId();
     private final String firstMemberFirstName = "Eric";
     private final String firstMemberLastName = "Evans";
     private final String firstMemberEmail = "eric.evans@gmail.com";
 
     private EventProposalCreatedEvent eventProposalCreatedEvent;
     private SignInterestCommand signInterestForFirstMemberCommand;
-    private MemberSignedInterestEvent firstMemberSignedInterestEvent;
+    private AttendeeSignedInterestEvent firstAttendeeSignedInterestEvent;
 
     @Override
     @Before
@@ -46,16 +43,16 @@ public class SigningInterestTestCase extends EventProposalPreconfiguredTestCase 
         signInterestForFirstMemberCommand = SignInterestCommandBuilder
                 .newSignInterestCommand()
                 .eventProposalId(eventProposalId)
-                .memberId(firstMemberId)
+                .attendeeId(firstMemberId)
                 .firstName(firstMemberFirstName)
                 .lastName(firstMemberLastName)
                 .email(firstMemberEmail)
                 .build();
 
-        firstMemberSignedInterestEvent = MemberSignedInterestEventBuilder
+        firstAttendeeSignedInterestEvent = MemberSignedInterestEventBuilder
                 .newSignedInterestEvent()
                 .eventProposalId(eventProposalId)
-                .memberId(firstMemberId)
+                .attendeeId(firstMemberId)
                 .firstName(firstMemberFirstName)
                 .lastName(firstMemberLastName)
                 .email(firstMemberEmail)
@@ -67,7 +64,7 @@ public class SigningInterestTestCase extends EventProposalPreconfiguredTestCase 
         fixture
                 .given(eventProposalCreatedEvent)
                 .when(signInterestForFirstMemberCommand)
-                .expectEvents(firstMemberSignedInterestEvent);
+                .expectEvents(firstAttendeeSignedInterestEvent);
     }
 
     @Test
@@ -75,14 +72,14 @@ public class SigningInterestTestCase extends EventProposalPreconfiguredTestCase 
         fixture
                 .given(
                         eventProposalCreatedEvent,
-                        firstMemberSignedInterestEvent
+                        firstAttendeeSignedInterestEvent
                 )
                 .when(signInterestForFirstMemberCommand)
                 .expectEvents(
                         MemberAlreadyInterestedInEventProposalEventBuilder
                                 .newMemberAlreadyInterestedInEventProposalEvent()
                                 .eventProposalId(eventProposalId)
-                                .memberId(firstMemberId)
+                                .attendeeId(firstMemberId)
                                 .firstName(firstMemberFirstName)
                                 .lastName(firstMemberLastName)
                                 .email(firstMemberEmail)

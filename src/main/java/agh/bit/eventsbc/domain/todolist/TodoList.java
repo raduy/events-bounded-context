@@ -117,7 +117,7 @@ public class TodoList extends IdentifiedDomainAggregateRoot<TodoListId> {
     @EventSourcingHandler
     public void on(TodoListFulfilledWithTemplateEvent event) {
         todoItems.addAll(
-            fromDescriptions(event.todoItemIds(), event.todoItemDescriptions(), event.fulfilledAt())
+                fromDescriptions(event.todoItemIds(), event.todoItemDescriptions(), event.fulfilledAt())
         );
     }
 

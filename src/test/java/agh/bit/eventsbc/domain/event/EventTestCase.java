@@ -1,11 +1,12 @@
 package agh.bit.eventsbc.domain.event;
 
+import agh.bit.eventsbc.domain.attendee.Attendee;
+import agh.bit.eventsbc.domain.attendee.AttendeeId;
 import agh.bit.eventsbc.domain.event.commands.CreateEventCommand;
 import agh.bit.eventsbc.domain.event.commands.FinishAttendeeGatheringCommand;
 import agh.bit.eventsbc.domain.event.commands.SignForEventCommand;
 import agh.bit.eventsbc.domain.event.events.*;
 import agh.bit.eventsbc.domain.event.factories.AttendeeFactory;
-import agh.bit.eventsbc.domain.event.valueobjects.AttendeeId;
 import agh.bit.eventsbc.domain.event.valueobjects.EventId;
 import org.junit.Test;
 
@@ -13,7 +14,8 @@ public class EventTestCase extends EventPreconfiguredTestCase {
     private final EventId eventId = EventId.valueOf(1L);
     private final String EVENT_NAME = "ddd-workshop";
     private final Integer MAX_ATTENDEES_COUNT = 10;
-    private Attendee attendee = AttendeeFactory.create(AttendeeId.valueOf(2L), "jan.kowalski@domain.com", "Jan", "Kowalski");
+    private final AttendeeId attendeeId = new AttendeeId();
+    private Attendee attendee = AttendeeFactory.create(attendeeId, "jan.kowalski@domain.com", "Jan", "Kowalski");
 
     @Test
     public void thatCreateEventCommandCreatesNewEventAggregate() throws Exception {
@@ -34,7 +36,7 @@ public class EventTestCase extends EventPreconfiguredTestCase {
                         new EventCreatedEvent(eventId, EVENT_NAME, MAX_ATTENDEES_COUNT)
                 )
                 .when(
-                        new SignForEventCommand(eventId, AttendeeId.valueOf(2L), "jan.kowalski@domain.com", "Jan", "Kowalski")
+                        new SignForEventCommand(eventId, attendeeId, "jan.kowalski@domain.com", "Jan", "Kowalski")
                 )
                 .expectEvents(
                         new AttendeeAddedEvent(eventId, attendee)
@@ -49,10 +51,10 @@ public class EventTestCase extends EventPreconfiguredTestCase {
                         new AttendeeAddedEvent(eventId, attendee)
                 )
                 .when(
-                        new SignForEventCommand(eventId, AttendeeId.valueOf(2L), "jan.kowalski@domain.com", "Jan", "Kowalski")
+                        new SignForEventCommand(eventId, attendeeId, "jan.kowalski@domain.com", "Jan", "Kowalski")
                 )
                 .expectEvents(
-                        new AttendeeAlreadySignedForEvent(AttendeeId.valueOf(2L), eventId)
+                        new AttendeeAlreadySignedForEvent(attendeeId, eventId)
                 );
     }
 
@@ -64,7 +66,7 @@ public class EventTestCase extends EventPreconfiguredTestCase {
                         new AttendeeAddedEvent(eventId, attendee)
                 )
                 .when(
-                        new SignForEventCommand(eventId, AttendeeId.valueOf(4L), "anna.kowalska@domain.com", "Anna", "Kowalska")
+                        new SignForEventCommand(eventId, new AttendeeId(), "anna.kowalska@domain.com", "Anna", "Kowalska")
                 )
                 .expectEvents(
                         new MaxAttendeeCountExceededEvent(eventId, 1)
@@ -79,7 +81,7 @@ public class EventTestCase extends EventPreconfiguredTestCase {
                         new AttendeeListClosedEvent(eventId)
                 )
                 .when(
-                        new SignForEventCommand(eventId, AttendeeId.valueOf(3L), "anna.kowalska@domain.com", "Anna", "Kowalska")
+                        new SignForEventCommand(eventId, new AttendeeId(), "anna.kowalska@domain.com", "Anna", "Kowalska")
                 )
                 .expectEvents(
                         new AttendeeGatheringAlreadyClosedEvent(eventId)

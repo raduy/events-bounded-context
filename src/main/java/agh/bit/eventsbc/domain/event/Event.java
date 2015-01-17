@@ -1,9 +1,10 @@
 package agh.bit.eventsbc.domain.event;
 
+import agh.bit.eventsbc.domain.attendee.Attendee;
+import agh.bit.eventsbc.domain.attendee.AttendeeId;
 import agh.bit.eventsbc.domain.common.IdentifiedDomainAggregateRoot;
 import agh.bit.eventsbc.domain.event.events.*;
 import agh.bit.eventsbc.domain.event.factories.AttendeeFactory;
-import agh.bit.eventsbc.domain.event.valueobjects.AttendeeId;
 import agh.bit.eventsbc.domain.event.valueobjects.EventId;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 
@@ -67,7 +68,7 @@ public class Event extends IdentifiedDomainAggregateRoot<EventId> {
     }
 
     private boolean isAttendeeAlreadySignedForEvent(AttendeeId attendeeId) {
-        return attendees.stream().filter(attendee -> attendee.attendeeId().equals(attendeeId))
+        return attendees.stream().filter(attendee -> attendee.id().equals(attendeeId))
                 .findAny()
                 .isPresent();
     }
