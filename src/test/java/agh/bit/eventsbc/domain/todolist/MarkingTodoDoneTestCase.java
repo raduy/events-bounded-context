@@ -2,8 +2,8 @@ package agh.bit.eventsbc.domain.todolist;
 
 import agh.bit.eventsbc.domain.todolist.builders.TodoItemAssignedToTodoListEventBuilder;
 import agh.bit.eventsbc.domain.todolist.commands.MarkTodoItemDoneCommand;
-import agh.bit.eventsbc.domain.todolist.events.TodoItemMarkedDoneEvent;
 import agh.bit.eventsbc.domain.todolist.events.TodoItemAssignedToTodoListEvent;
+import agh.bit.eventsbc.domain.todolist.events.TodoItemMarkedDoneEvent;
 import agh.bit.eventsbc.domain.todolist.events.TodoItemNotMarkedDoneEvent;
 import agh.bit.eventsbc.domain.todolist.events.TodoListCreatedEvent;
 import agh.bit.eventsbc.domain.todolist.valueobjects.TodoItemId;
@@ -11,15 +11,13 @@ import agh.bit.eventsbc.domain.todolist.valueobjects.TodoListId;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.time.LocalDate;
-
 /**
  * Created by novy on 04.01.15.
  */
 public class MarkingTodoDoneTestCase extends TodoListPreconfiguredTestCase {
 
-    private final TodoListId todoListId = TodoListId.of("id");
-    private final TodoItemId todoItemId = TodoItemId.of("123");
+    private final TodoListId todoListId = new TodoListId();
+    private final TodoItemId todoItemId = new TodoItemId();
 
     private TodoListCreatedEvent todoListCreatedEvent;
     private TodoItemAssignedToTodoListEvent todoItemAssignedToTodoListEvent;

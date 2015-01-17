@@ -17,7 +17,7 @@ import org.junit.Test;
  */
 public class SigningInterestTestCase extends EventProposalPreconfiguredTestCase {
 
-    private final EventProposalId eventProposalId = EventProposalId.of("132");
+    private final EventProposalId eventProposalId = new EventProposalId();
     private final int interestThreshold = 2;
 
     private final AttendeeId firstMemberId = new AttendeeId();

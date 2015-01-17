@@ -1,15 +1,17 @@
 package agh.bit.eventsbc.domain.eventproposal.valueobjects;
 
-import agh.bit.eventsbc.domain.common.DomainIdentifier;
-import lombok.Value;
+import agh.bit.eventsbc.domain.common.UUIDBasedId;
 
 /**
  * Created by novy handle 03.01.15.
  */
 
-@Value(staticConstructor = "of")
-public class EventProposalId implements DomainIdentifier {
+public class EventProposalId extends UUIDBasedId {
 
-    private final String id;
+    public EventProposalId() {
+    }
 
+    public EventProposalId(String id) {
+        super(id);
+    }
 }

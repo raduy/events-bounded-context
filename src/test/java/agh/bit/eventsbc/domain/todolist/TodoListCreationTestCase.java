@@ -12,15 +12,16 @@ public class TodoListCreationTestCase extends TodoListPreconfiguredTestCase {
 
     @Test
     public void createEventProposalCommandShouldCreateNewEventProposal() throws Exception {
+        TodoListId todoListId = new TodoListId();
         fixture.given()
                 .when(
                         new CreateTodoListCommand(
-                                TodoListId.of("123")
+                                todoListId
                         )
                 )
                 .expectEvents(
                         new TodoListCreatedEvent(
-                                TodoListId.of("123")
+                                todoListId
                         )
                 );
     }

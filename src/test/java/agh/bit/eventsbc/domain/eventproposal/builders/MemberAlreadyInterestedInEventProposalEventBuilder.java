@@ -16,7 +16,7 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor(staticName = "newMemberAlreadyInterestedInEventProposalEvent")
 public class MemberAlreadyInterestedInEventProposalEventBuilder {
 
-    private EventProposalId eventProposalId = EventProposalId.of("123");
+    private EventProposalId eventProposalId = new EventProposalId();
     private AttendeeId attendeeId = new AttendeeId();
     private String firstName = "default firs name";
     private String lastName = "default last name";
@@ -31,5 +31,4 @@ public class MemberAlreadyInterestedInEventProposalEventBuilder {
                 email
         );
     }
-
 }

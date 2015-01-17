@@ -16,7 +16,7 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor(staticName = "newSignedInterestEvent")
 public class MemberSignedInterestEventBuilder {
 
-    private EventProposalId eventProposalId = EventProposalId.of("123");
+    private EventProposalId eventProposalId = new EventProposalId();
     private AttendeeId attendeeId = new AttendeeId();
 
     private String firstName = "default first name";

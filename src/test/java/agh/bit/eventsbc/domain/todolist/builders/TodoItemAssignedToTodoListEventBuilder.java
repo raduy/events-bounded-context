@@ -18,8 +18,8 @@ import java.time.LocalDate;
 @NoArgsConstructor(staticName = "newTodoItemAssignedToTodoListEvent")
 public class TodoItemAssignedToTodoListEventBuilder {
 
-    private TodoListId todoListId = TodoListId.of("123");
-    private TodoItemId todoItemId = TodoItemId.of("123");
+    private TodoListId todoListId = new TodoListId();
+    private TodoItemId todoItemId = new TodoItemId();
     private String description = "default description";
     private LocalDate createdAt = LocalDate.of(2010, 1, 1);
 

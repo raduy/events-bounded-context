@@ -5,7 +5,6 @@ import agh.bit.eventsbc.domain.todolist.valueobjects.TodoItemId;
 import com.google.common.base.Preconditions;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -18,7 +17,7 @@ public class TodoItemIdProviderImpl implements TodoItemIdProvider {
 
     @Override
     public TodoItemId nextId() {
-        return TodoItemId.of(randomUUIDString());
+        return new TodoItemId();
     }
 
     @Override
@@ -27,11 +26,7 @@ public class TodoItemIdProviderImpl implements TodoItemIdProvider {
 
         return IntStream
                 .range(0, batchSize)
-                .mapToObj(i -> TodoItemId.of(randomUUIDString()))
+                .mapToObj(i -> new TodoItemId())
                 .collect(Collectors.toList());
-    }
-
-    private String randomUUIDString() {
-        return UUID.randomUUID().toString();
     }
 }

@@ -17,7 +17,7 @@ public class GatheringInterestSagaTest {
 
     private AnnotatedSagaTestFixture fixture;
 
-    private final EventProposalId eventProposalId = EventProposalId.of("123");
+    private final EventProposalId eventProposalId = new EventProposalId();
     private final int minimalInterestedThreshold = 2;
 
 
