@@ -8,12 +8,6 @@
     <artifactId>eventsbc</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.2.1.RELEASE</version>
-    </parent>
-
     <properties>
         <java.version>1.8</java.version>
         <gmaven.version>1.4</gmaven.version>
@@ -26,6 +20,7 @@
 
     <build>
         <plugins>
+            <!--Maven Compiler Plugin-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -91,6 +86,20 @@
                 </configuration>
             </plugin>
 
+
+            <!--Jetty-->
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.2.2.v20140723</version>
+                <configuration>
+                    <httpConnector>
+                        <port>8080</port>
+                        <host>localhost</host>
+                    </httpConnector>
+                    <scanIntervalSeconds>10</scanIntervalSeconds>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -167,8 +176,7 @@
             <version>1.4.0</version>
         </dependency>
 
-
-        <!--Spring - Not in use-->
+        <!--Spring-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
@@ -185,7 +193,28 @@
             <artifactId>spring-context</artifactId>
             <version>4.0.6.RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>4.0.6.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>4.0.6.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.0.1</version>
+        </dependency>
 
+        <!--Jackson-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-joda</artifactId>
+            <version>2.5.0</version>
+        </dependency>
 
         <!--Lombok-->
         <dependency>
@@ -193,12 +222,7 @@
             <artifactId>lombok</artifactId>
             <version>1.14.8</version>
         </dependency>
-
-        <!--this have to be repeated due to spring boot-->
-        <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy-all</artifactId>
-            <version>${groovy.version}</version>
-        </dependency>
+        
     </dependencies>
+
 </project>
