@@ -20,7 +20,7 @@ public class UUIDBasedId implements DomainIdentifier {
         return UUID.randomUUID().toString();
     }
 
-    public String id() {
+    public String getId() {
         return id;
     }
 

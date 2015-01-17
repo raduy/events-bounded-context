@@ -15,7 +15,7 @@ import java.util.stream.IntStream;
 @Component
 public class TodoItemIdProviderImpl implements TodoItemIdProvider {
 
-    private static final String ERROR_MESSAGE = "Requested id batch of negative size";
+    private static final String ERROR_MESSAGE = "Requested getId batch of negative size";
 
     @Override
     public TodoItemId nextId() {

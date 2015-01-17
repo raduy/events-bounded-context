@@ -34,7 +34,7 @@ public class FulfillingTodoListWithTemplateTestCase {
     private FixtureConfiguration fixture;
     private FulfillingTodoListWithTemplateCommandHandler commandHandler;
 
-    private final TodoListTemplateId todoListTemplateId = TodoListTemplateId.of("id");
+    private final TodoListTemplateId todoListTemplateId = TodoListTemplateId.of("getId");
     private final List<TodoItemId> todoItemIds = ImmutableList.of(
             new TodoItemId(),
             new TodoItemId()

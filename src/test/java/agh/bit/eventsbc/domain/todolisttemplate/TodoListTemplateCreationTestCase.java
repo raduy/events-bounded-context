@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class TodoListTemplateCreationTestCase extends TodoListTemplatePreconfiguredTestCase {
 
-    private final TodoListTemplateId id = TodoListTemplateId.of("id");
+    private final TodoListTemplateId id = TodoListTemplateId.of("getId");
     private final List<String> todoItemDescriptions = ImmutableList.of("todotem1", "todoitem2");
 
     @Test

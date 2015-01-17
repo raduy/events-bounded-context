@@ -77,7 +77,7 @@ public class TodoList extends IdentifiedDomainAggregateRoot<TodoListId> {
                 .findFirst();
 
         final TodoItem todoItem = todoItemOptional.orElseThrow(
-                () -> new IllegalArgumentException("TodoItem with given id not present")
+                () -> new IllegalArgumentException("TodoItem with given getId not present")
         );
 
         if (todoItem.markedDone()) {
