@@ -1,11 +1,11 @@
-package agh.bit.eventsbc.web.controller;
+package agh.bit.eventsbc.web.eventproposal.controller;
 
 import agh.bit.eventsbc.domain.eventproposal.commands.CreateEventProposalCommand;
 import agh.bit.eventsbc.domain.eventproposal.valueobjects.EventDescription;
 import agh.bit.eventsbc.domain.eventproposal.valueobjects.EventProposalId;
-import agh.bit.eventsbc.query.eventproposal.forms.CreateEventProposalForm;
 import agh.bit.eventsbc.query.eventproposal.model.EventProposalBasicView;
 import agh.bit.eventsbc.query.eventproposal.repositories.EventProposalJpaRepository;
+import agh.bit.eventsbc.web.eventproposal.forms.CreateEventProposalForm;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

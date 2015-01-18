@@ -1,4 +1,4 @@
-package agh.bit.eventsbc.query.eventproposal.forms;
+package agh.bit.eventsbc.web.eventproposal.forms;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
