@@ -13,9 +13,13 @@ public class EventProposalEventHandler {
     @Autowired
     private EventProposalJpaRepository eventProposalRepository;
 
-    // TODO: dozer?
     @EventHandler
     public void handle(EventProposalCreatedEvent event) {
-        eventProposalRepository.save(new EventProposalBasicView(event));
+        eventProposalRepository.save(
+                new EventProposalBasicView(
+                    event.name(),
+                    event.minimalInterestThreshold(),
+                    event.eventProposalId().getId()
+                ));
     }
 }
