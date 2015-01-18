@@ -17,9 +17,9 @@ public class EventProposalEventHandler {
     public void handle(EventProposalCreatedEvent event) {
         eventProposalRepository.save(
                 new EventProposalBasicView(
-                    event.name(),
-                    event.minimalInterestThreshold(),
-                    event.eventProposalId().getId()
+                        event.name(),
+                        event.minimalInterestThreshold(),
+                        event.eventProposalId().getId()
                 ));
     }
 }

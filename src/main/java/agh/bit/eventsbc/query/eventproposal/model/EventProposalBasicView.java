@@ -1,7 +1,10 @@
 package agh.bit.eventsbc.query.eventproposal.model;
 
 import agh.bit.eventsbc.query.AbstractEntity;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -2,7 +2,6 @@ package agh.bit.eventsbc.domain.attendee;
 
 import agh.bit.eventsbc.domain.common.IdentifiedDomainEntity;
 import com.google.common.base.Preconditions;
-import lombok.Value;
 import lombok.experimental.Accessors;
 import org.apache.commons.validator.routines.EmailValidator;
 
