@@ -117,14 +117,6 @@
             <version>2.3</version>
         </dependency>
 
-
-        <!--Other libs needs it-->
-        <dependency>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.0-api</artifactId>
-            <version>1.0.1.Final</version>
-        </dependency>
-
         <!--Testing-->
         <dependency>
             <groupId>junit</groupId>
